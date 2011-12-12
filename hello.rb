@@ -13,11 +13,25 @@ end
 
 DataMapper.auto_upgrade!
 
-@post = Section.create(
-  :name      => "Ads"
-)
-
+# home
 get '/' do
-	@section = Section.get(1)
-  "Chris Birch: Business Man <br/> --- <br/> " + @section.name
+	@sections = Section.all(:parentid => nil)
+	erb :home
+end
+
+# view a section
+get '/s/:sectionname' do
+  @section = Section.get(:name => params[:sectionname])
+  erb :section
+end
+
+# admin
+get '/iambirchy' do
+	@sections = Section.all(:parentid => nil)
+	erb :home_admin
+end
+
+# view create section page
+get '/s/creation' do
+  erb :section_add
 end
