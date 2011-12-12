@@ -13,6 +13,24 @@ end
 
 DataMapper.auto_upgrade!
 
+#helpers
+helpers do
+
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+      throw(:halt, [401, "Not authorized\n"])
+    end
+  end
+
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', 'flipmode']
+  end
+
+end
+
+
 # home
 get '/' do
 	@sections = Section.all(:parentid => nil)
@@ -21,17 +39,39 @@ end
 
 # view a section
 get '/s/:sectionname' do
-  @section = Section.get(:name => params[:sectionname])
-  erb :section
+	@section = Section.first(:name => params[:sectionname])
+  	erb :section
 end
 
-# admin
+# admin: home
 get '/iambirchy' do
+	protected!
 	@sections = Section.all(:parentid => nil)
 	erb :home_admin
 end
 
-# view create section page
-get '/s/creation' do
-  erb :section_add
+#admin: section deletion
+get '/iambirchy/s/delete/:id' do
+	protected!
+	@section = Section.get(params[:id])
+	@section.destroy
+	redirect '/iambirchy'
+end
+
+# admin: section creation
+get '/iambirchy/s/add' do
+	protected!
+	erb :section_add
+end
+
+# admin: section create   
+post '/iambirchy/s/create' do
+	protected!
+	section = Section.new(:name => params[:name])
+  if section.save
+    status 201 
+  else
+    status 412  
+  end
+  redirect '/iambirchy'
 end

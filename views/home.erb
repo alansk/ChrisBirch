@@ -1,7 +1,3 @@
-<ul>
 <% @sections.each do |section| %>
-<li>
-<a href="/section/<%=section.name%>"><%= section.name %></a>
-</li>
+<a href="/s/<%=section.name%>" class="section"><%= section.name %></a>
 <% end %>
-</ul>

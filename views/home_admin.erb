@@ -1,0 +1,9 @@
+<ul>
+<% @sections.each do |section| %>
+<li>
+<%= section.name %> <a href="/iambirchy/s/delete/<%=section.id%>">delete</a>
+</li>
+<% end %>
+</ul>
+
+<a href="/iambirchy/s/add">add</a>
