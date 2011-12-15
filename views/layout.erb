@@ -3,7 +3,28 @@
 <head>
 <title>Chris Birch</title>
 <link rel="stylesheet" type="text/css" href="/birch.css" />
+<script src="/jquery.js"></script>
+<script>
+$(document).ready(function()
+{
+	setColors = function(){$('a.section').each(function (i) {
+		if(i == 0){ $(this).css('backgroundColor','red'); }
+		if(i == 1){ $(this).css('backgroundColor','green'); }
+		$(this).css('color','black');
+	})};
+	
+	$('a.section').mouseover(function(){
+		$(this).css('backgroundColor','white');
+	});
+	
+	$('a.section').mouseout(function(i){
+		setColors();
+	});
+	
+	setColors();
+});</script>
 <meta charset=utf-8 />
+<meta name="viewport" content="width=300" />
 </head>
 <body>
 <div id="container">

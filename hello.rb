@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'data_mapper'
 
-DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/development.db")
+DataMapper.setup(:default, "mysql://cjb:flipmode@localhost/cjb" || "sqlite3://#{Dir.pwd}/development.db")
 
 class Section
   include DataMapper::Resource  
