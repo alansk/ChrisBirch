@@ -4,7 +4,12 @@ $(document).ready(function()
 	$('a.title').animate({height:'50px', 'padding-top':20, 'padding-right':10,'padding-left':10,'padding-bottom':10},'slow', function(){});		
 });</script>
 
-<h2 class="sectionHeader"><%= @section.name %></h2>
 <% @items.each do |item| %>
-<img src="<%= item.file.url %>" alt="<%= item.title%>"/>
+<script>
+$(document).ready(function()
+{
+		$('#<%= item.id %>').css('background-image','url("<%= item.file.url %>")');	
+});</script>
+<a href="" class="item" id="<%= item.id %>">&nbsp;</a>
 <% end %>
+

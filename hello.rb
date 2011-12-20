@@ -9,9 +9,6 @@ DataMapper.setup(:default, ENV['DATABASE_URL'])
 class ImageUploader < CarrierWave::Uploader::Base
 	#include CarrierWave::MiniMagick
 	storage :file
-	def store_dir
-    	'/Users/skezmondo/Sites/BirchHeroku/public/uploads'
-    end
 end
 
 class Section
@@ -59,6 +56,7 @@ end
 
 # view a section
 get '/s/:sectionname' do
+	@title = 'Chris Birch : ' + params[:sectionname]
 	@section = Section.first(:name => params[:sectionname])
 	@items = Item.all(:sectionid => @section.id)
   	erb :section

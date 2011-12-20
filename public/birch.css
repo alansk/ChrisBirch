@@ -10,8 +10,6 @@ body {
 	font-family:helvetica,arial,sans-serif;
 	font-size:12px;
 	text-align:center;
-	
-	/*text-shadow: #aaa 1px 1px 1px;*/
 }
 
 a {
@@ -21,27 +19,19 @@ a {
 
 /** Layout **/
 #container {
-	/*background:#fff;*/
 	margin:auto;
-	width:260px;
-	padding:10px;	
+	width:600px;
+	padding:0px;	
 	text-align:center;
-	/*-moz-box-shadow: 0px 0px 30px #000;
-	-webkit-box-shadow: 0px 0px 30px #000;
-	box-shadow: 0px 0px 30px #000;*/
 }
 
 a.title{
 	background-image:url('clothback.jpg');
 	width:200px;
 	height:100px;
-	margin:10px auto 30px auto;
+	margin:10px auto 10px auto;
 	display:block;
 	text-shadow: #fff 0px 1px 0px;
-	/*background:#eee;
-    -moz-box-shadow: 0px 1px 2px #fff;
-	-webkit-box-shadow: 0px 1px 2px #fff;
-	box-shadow: 0px 1px 2px #fff;*/
 	padding:40px 20px 0px 20px;
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -55,16 +45,13 @@ a.section {
     /*behavior: url(PIE.htc);*/
     display:-moz-inline-box;
     display:inline-block;
-    width: 50px;
+    width: 70px;
     background:#f00;
-    /*border: 3px solid #333;
-    -moz-box-shadow: 0px 0px 5px #000;
-	-webkit-box-shadow: 0px 0px 5px #000;
-	box-shadow: 0px 0px 5px #000;*/
-	padding:34px 20px 34px 20px;
-	margin:0 5px 0 5px;
+	padding:46px 20px 46px 20px;
+	margin:5px 5px 5px 5px;
 	font-size:16px;
 	font-weight:bold;
+	text-shadow: #000 0 0 0;
 }
 
 .sectionHeader {
@@ -73,14 +60,29 @@ a.section {
     border-radius: 5px;
     width: 40px;
     background:#f00;
-    /*border: 3px solid #333;
-    -moz-box-shadow: 0px 0px 5px #000;
-	-webkit-box-shadow: 0px 0px 5px #000;
-	box-shadow: 0px 0px 5px #000;*/
 	margin:auto;
 	padding:10px;
 	font-size:16px;
 	font-weight:bold;
+}
+
+a.item {
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+    /*behavior: url(PIE.htc);*/
+    display:-moz-inline-box;
+    display:inline-block;
+    width: 70px;
+    background:#222;
+	padding:46px 20px 46px 20px;
+	margin:5px 5px 5px 5px;
+	font-size:12px;
+	font-weight:bold;
+	text-shadow: #000 0 0 0;
+	-webkit-box-shadow:1 1 1px #000;
+	-moz-box-shadow:1 1 1px #000;
+	box-shadow:1 1 1px #000;
 }
 
 .admin{
@@ -99,3 +101,13 @@ a.section {
     text-decoration:underline;
 }
 
+@media only screen and (max-device-width:480px){
+	#container {
+		width:300px;
+	}
+	
+	a.title{
+		height:50px;
+		padding:20px 10px 10px 10px;
+	}
+}
