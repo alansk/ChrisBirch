@@ -1,3 +1,5 @@
 sinatra
 data_mapper
 dm-postgres-adapter
+carrierwave
+carrierwave-datamapper
