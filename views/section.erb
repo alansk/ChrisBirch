@@ -1,15 +1,52 @@
 <script>
+
 $(document).ready(function()
 {
-	$('a.title').animate({height:'50px', 'padding-top':20, 'padding-right':10,'padding-left':10,'padding-bottom':10},'slow', function(){});		
-});</script>
+	isMobile = function(){
+        return 	((navigator.platform.indexOf("iPhone") != -1) ||
+        		(navigator.platform.indexOf("iPod") != -1) ||
+        		(navigator.platform.indexOf("android") != -1));
+	};
 
+	containerSize = $('#container').css('width').replace('px','') - 50;
+	normalSize = $('a.item').children().first().css('width').replace('px','');
+	
+	if(isMobile()==true){
+		containerSize = '200';
+		normalSize = '73';
+	}
+		
+	$('a.item').click(function(){
+		
+		if($(this).css('width').replace('px','') >= containerSize)
+		{
+			$(this).children().first().css('backgroundColor','');
+			$(this).children().first().animate({'width': normalSize +'px'},
+							'fast', function(){		
+								$('html, body').animate({scrollTop:$(this).position().top}, 'slow');
+							});
+		}
+		else
+		{
+			$(this).children().first().css('backgroundColor','white');
+			$(this).children().first().animate({'width': containerSize +'px'}, 
+				1000, function(){
+							$('html, body').animate({scrollTop:$(this).position().top}, 'slow');
+						});
+				
+		}
+		return false;
+	});
+	
+});</script>
+<div id="fence">
 <% @items.each do |item| %>
 <script>
 $(document).ready(function()
 {
 		$('#<%= item.id %>').css('background-image','url("<%= item.file.url %>")');	
 });</script>
-<a href="" class="item" id="<%= item.id %>">&nbsp;</a>
+<a href="" class="item" id="<%= item.id %>"><div class="inner">&nbsp;</div></a>
 <% end %>
+</div>
 
