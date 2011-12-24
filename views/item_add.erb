@@ -1,8 +1,9 @@
 <div class="admin">
 <form action="/iambirchy/i/create" method="POST" enctype="multipart/form-data">
-  <input type="text" name="title">
-  <textarea name="body"></textarea>
-  <input type="file" name="image">
+  Title<input type="text" name="title">
+  <textarea name="description">Description</textarea>
+  Icon image <input type="file" name="iconimg">
+  Expanded image <input type="file" name="expandimg">
   <input type="hidden" name="sectionid" value="<%= params[:sectionid] %>">
   <input type="submit" value="Add Item"/>
 </form>

@@ -22,10 +22,12 @@ class Item
   include DataMapper::Resource  
   property :id,           	Serial
   property :title,       	String
-  property :body,         	String
+  property :description,    String
   property :sectionid, 		Integer
-  property :file, 			String, 		:auto_validation => false
-  mount_uploader :file, 	ImageUploader
+  property :iconimg, 		String, 		:auto_validation => false
+  mount_uploader :iconimg, 	ImageUploader
+  property :expandimg, 		String, 		:auto_validation => false
+  mount_uploader :expandimg, 	ImageUploader
 end
 
 DataMapper.auto_upgrade!
@@ -50,6 +52,7 @@ end
 
 # home
 get '/' do
+	@title = 'Chris Birch : Business Man'
 	@sections = Section.all(:parentid => nil)
 	erb :home
 end
@@ -62,9 +65,19 @@ get '/s/:sectionname' do
   	erb :section
 end
 
+# view an item
+get '/s/:sectionname/i/:title' do
+	@title = 'Chris Birch : ' + params[:sectionname] + ' : ' + params[:title]
+	@section = Section.first(:name => params[:sectionname])
+	@item = Item.first(:sectionid => params[:id], :title => params[:title])
+	@itemdetail = ItemDetail.first(:itemid => @item.id)
+  	erb :item
+end
+
 # admin: home
 get '/iambirchy/?' do
 	protected!
+	@title = 'Chris Birch : Admin'
 	@sections = Section.all(:parentid => nil)
 	erb :home_admin
 end
@@ -80,6 +93,7 @@ end
 # admin: section creation
 get '/iambirchy/s/add' do
 	protected!
+	@title = 'Chris Birch : Admin'
 	erb :section_add
 end
 
@@ -98,6 +112,7 @@ end
 # admin: item creation
 get '/iambirchy/i/add/:sectionid' do
 	protected!
+	@title = 'Chris Birch : Admin'
 	erb :item_add
 end
 
@@ -106,9 +121,10 @@ post '/iambirchy/i/create' do
 	protected!
 	item = Item.new
 	item.title = params[:title]
-	item.body = params[:body] 
+	item.description = params[:description] 
 	item.sectionid = params[:sectionid]
-	item.file = params[:image]
+	item.iconimg = params[:iconimg]
+	item.expandimg = params[:expandimg]
 	item.save
     redirect '/iambirchy'
 end
@@ -123,7 +139,15 @@ end
 
 # admin: edit items in a section
 get '/iambirchy/s/edititems/:id' do
+	@title = 'Chris Birch : Admin'
 	@section = Section.get(params[:id])
 	@items = Item.all(:sectionid => params[:id])
   	erb :section_edititems
+end
+
+# admin: edit item
+get '/iambirchy/i/edit/:id' do
+	@title = 'Chris Birch : Admin'
+	@item = Item.get(params[:id])
+  	erb :item_edit
 end

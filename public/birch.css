@@ -77,8 +77,6 @@ a.item {
     /*behavior: url(PIE.htc);*/
     display:-moz-inline-box;
     display:inline-block;
-    
-    background:#222;
 	margin:5px 5px 5px 5px;
 	font-size:12px;
 	font-weight:bold;
@@ -106,6 +104,10 @@ a.item {
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
+}
+
+img.expandImg{
+	width:200px;
 }
 
 .admin a{

@@ -1,6 +1,6 @@
 <h2 class="sectionHeader"><%= @section.name %></h2>
 <div class="admin">
 <% @items.each do |item| %>
-<%= item.title%> <a href="/iambirchy/i/delete/<%= item.id %>">delete</a><br/>
+<%= item.title%> <a href="/iambirchy/i/edit/<%= item.id %>">edit</a> <a href="/iambirchy/i/delete/<%= item.id %>">delete</a><br/>
 <% end %>
 </div>
