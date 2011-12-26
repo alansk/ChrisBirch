@@ -1,6 +1,6 @@
 <div id="fence">
 <% @items.each do |item| %>
-<a href="" class="item" id="<%= item.id %>"><div class="inner">&nbsp;</div></a>
+<a href="" class="item" id="<%= item.id %>"><div class="inner"><%= item.title %></div></a>
 <% end %>
 </div>
 
@@ -11,15 +11,18 @@ $(document).ready(function()
 	title = new Array();
 	description = new Array();
 	iconImgUrl = new Array();
-	expandImgUrl = new Array();
+	expandDeskImgUrl = new Array();
+	expandMobileImgUrl = new Array();
 
 	<% @items.each do |item| %>
 		title[<%= item.id %>] = '<%= item.title %>';
 		description[<%= item.id %>] = '<%= item.description %>';
-		iconImgUrl[<%= item.id %>] = '<%= item.iconimg.url %>';
-		expandImgUrl[<%= item.id %>] = '<%= item.expandimg.url %>';
+		iconImgUrl[<%= item.id %>] = '<%= item.iconimg.icon.url %>';
+		expandDeskImgUrl[<%= item.id %>] = '<%= item.expandimg.expand_desk.url %>';
+		expandMobileImgUrl[<%= item.id %>] = '<%= item.expandimg.expand_mobile.url %>';
 		
-		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.url %>")');					
+		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
+		$('#<%= item.id %>').children().first().html('&nbsp;');
 	<% end %>
 
 	isMobile = function(){
@@ -37,6 +40,7 @@ $(document).ready(function()
 	}
 		
 	$('a.item').click(function(){
+		divid = $(this).attr('id');
 		if($(this).css('width').replace('px','') >= containerSize)
 		{
 			$(this).children().first().html('&nbsp;');
@@ -50,10 +54,17 @@ $(document).ready(function()
 		else
 		{
 			divid = $(this).attr('id');
-			$(this).children().first().css('background-image','url("' +expandImgUrl[divid] + '")');
+			if(isMobile()==true){
+				$(this).children().first().css('background-image','url("' +expandMobileImgUrl[divid] + '")');
+			}else{
+				$(this).children().first().css('background-image','url("' +expandDeskImgUrl[divid] + '")');
+			}
 			$(this).children().first().animate({'width': containerSize +'px'}, 'fast', function(){
 							$('html, body').animate({scrollTop:$(this).position().top}, 'fast', function(){	
-								$('#'+divid).children().first().html('<br/>' + title[divid] + '<br/>' + description[divid]);
+								$('#'+divid).children().first().html('<div class="innerinner">' + title[divid] + '<br/><br/>' + description[divid] + '</div>');
+								height = $('#'+divid).children().first().children().first().css('height').replace('px','');
+								$('#'+divid).children().first().children().first().css('height', '0px');
+								$('#'+divid).children().first().children().first().animate({'height': normalSize + 'px'}, 'fast', function(){});
 							});
 						});
 		}

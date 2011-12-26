@@ -3,11 +3,32 @@ require 'sinatra'
 require 'data_mapper'
 require 'carrierwave'
 require 'carrierwave/datamapper'
+require 'rmagick'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'])
 
-class ImageUploader < CarrierWave::Uploader::Base
-	#include CarrierWave::MiniMagick
+class SectionUploader < CarrierWave::Uploader::Base
+	include CarrierWave::RMagick
+    
+    version :icon do
+      process :resize_to_fill => [125,125]
+    end
+    
+	storage :file
+end
+
+class ItemUploader < CarrierWave::Uploader::Base
+	include CarrierWave::RMagick
+
+    
+    version :expand_mobile do
+      process :resize_to_fill => [250,250]
+    end
+    
+    version :expand_desk do
+      process :resize_to_fill => [500,500]
+    end
+    
 	storage :file
 end
 
@@ -25,9 +46,9 @@ class Item
   property :description,    String
   property :sectionid, 		Integer
   property :iconimg, 		String, 		:auto_validation => false
-  mount_uploader :iconimg, 	ImageUploader
+  mount_uploader :iconimg, 	SectionUploader
   property :expandimg, 		String, 		:auto_validation => false
-  mount_uploader :expandimg, 	ImageUploader
+  mount_uploader :expandimg, 	ItemUploader
 end
 
 DataMapper.auto_upgrade!

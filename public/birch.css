@@ -30,6 +30,7 @@ a {
 }
 
 a.title{
+	background: #ddd;
 	background-image:url('clothback.jpg');
 	width:200px;
 	height:100px;
@@ -92,7 +93,21 @@ a.item {
 	-webkit-border-radius: 999px;
     -moz-border-radius: 999px;
     border-radius: 999px;
+    text-align:center;
+    -background:#fff;
 }
+
+.innerinner{
+	margin:0 10px 0 10px;
+	background:#fff;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+	-webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 999px;
+    padding:20px;
+}
+
 
 .admin{
 	width:200px;
