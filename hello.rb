@@ -3,7 +3,7 @@ require 'sinatra'
 require 'data_mapper'
 require 'carrierwave'
 require 'carrierwave/datamapper'
-require 'rmagick'
+require 'RMagick'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'])
 
