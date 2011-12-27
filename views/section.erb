@@ -77,13 +77,15 @@ $(document).ready(function()
 				$(this).children().first().css('background-image','url("' +expandDeskImgUrl[divid] + '")');
 			}
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
-							$('html, body').animate({scrollTop:$(this).position().top}, 'fast', function(){	
-								$('#'+divid).children().first().css('padding','10px 0 10px 0');
+							$('#'+divid).children().first().css('padding','10px 0 10px 0');
 								$('#'+divid).children().first().html('<div class="innerinner">' + title[divid] + '<br/><br/>' + description[divid] + '</div>');
 								height = $('#'+divid).children().first().children().first().css('height').replace('px','');
 								$('#'+divid).children().first().children().first().css('height', '50px');
-								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){});
-							});
+								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){
+									$('html, body').animate({scrollTop:$(this).position().top}, 'fast', function(){});
+								});
+								
+							
 						});
 		}
 		return false;
