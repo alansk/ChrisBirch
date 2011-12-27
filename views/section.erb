@@ -64,7 +64,7 @@ $(document).ready(function()
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
 								$(this).css('background-image','url("' +iconImgUrl[divid]+ '")');
-								$('html, body').animate({scrollTop:$(this).position().top}, 'fast');
+								$('html, body').animate({scrollTop:$(this).parent().position().top}, 'fast');
 							});
 			
 		}
@@ -82,7 +82,7 @@ $(document).ready(function()
 								height = $('#'+divid).children().first().children().first().css('height').replace('px','');
 								$('#'+divid).children().first().children().first().css('height', '50px');
 								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){
-									$('html, body').animate({scrollTop:$(this).position().top}, 'fast', function(){});
+									$('html, body').animate({scrollTop:$(this).parent().position().top}, 'fast', function(){});
 								});
 								
 							
