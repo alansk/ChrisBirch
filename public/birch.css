@@ -10,6 +10,8 @@ body {
 	font-family:helvetica,arial,sans-serif;
 	font-size:12px;
 	text-align:center;
+	margin:0px;
+	padding:0px;
 }
 
 a {
@@ -19,28 +21,48 @@ a {
 
 /** Layout **/
 #container {
-	margin: 50px auto;
+	position:relative;
+	top:-5px;
+	background:#222;
+	margin: 0px auto;
 	width:501px;
 	padding:0px;	
 	text-align:center;
+	-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
 }
+
 #fence {
 	width:501px;	
 	text-align:left;
 }
 
-a.title{
+.title{
 	background: #ddd;
 	background-image:url('clothback.jpg');
 	width:200px;
-	height:100px;
-	margin:10px auto 10px auto;
+	height:50px;
+	padding:30px 10px 15px 10px;
+	margin:0px auto 10px auto;
 	display:block;
 	text-shadow: #fff 0px 1px 0px;
-	padding:40px 20px 0px 20px;
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
+}
+
+.social{
+	padding:10px 0 0 0;
+	font-size:11px;
+}
+
+.social a{
+	color:#888;
+}
+
+.social a:hover{
+	color:#f00;
 }
 
 a.section {
@@ -138,8 +160,5 @@ img.expandImg{
 		width:250px;
 	}
 	
-	a.title{
-		height:50px;
-		padding:20px 10px 10px 10px;
-	}
+
 }
