@@ -37,6 +37,7 @@ class Section
   property :id,           Serial
   property :name,         String
   property :parentid, 	Integer
+  property :ordering, Integer
 end
 
 class Item
@@ -49,6 +50,7 @@ class Item
   mount_uploader :iconimg, 	SectionUploader
   property :expandimg, 		String, 		:auto_validation => false
   mount_uploader :expandimg, 	ItemUploader
+  property :ordering, Integer
 end
 
 DataMapper.auto_upgrade!
@@ -74,24 +76,27 @@ end
 # home
 get '/' do
 	@title = 'Chris Birch : Business Man'
-	@sections = Section.all(:parentid => nil)
+	@sections = Section.all(:parentid => nil, :order  => [:ordering.asc])
 	erb :home
 end
 
 # view a section
-get '/s/:sectionname' do
+get '/s/:sectionname/?' do
 	@title = 'Chris Birch : ' + params[:sectionname]
 	@section = Section.first(:name => params[:sectionname])
-	@items = Item.all(:sectionid => @section.id)
+	@items = Item.all(:sectionid => @section.id, :order  => [:ordering.asc])
+	if @items.count == 1
+		redirect '/s/' + params[:sectionname] + '/i/' + @items.first.title
+	end
   	erb :section
 end
 
 # view an item
-get '/s/:sectionname/i/:title' do
+get '/s/:sectionname/i/:title/?' do
 	@title = 'Chris Birch : ' + params[:sectionname] + ' : ' + params[:title]
 	@section = Section.first(:name => params[:sectionname])
-	@item = Item.first(:sectionid => params[:id], :title => params[:title])
-	@itemdetail = ItemDetail.first(:itemid => @item.id)
+	@item = Item.first(:sectionid => @section.id, :title => params[:title])
+	#@itemdetail = ItemDetail.first(:itemid => @item.id)
   	erb :item
 end
 
@@ -99,8 +104,20 @@ end
 get '/iambirchy/?' do
 	protected!
 	@title = 'Chris Birch : Admin'
-	@sections = Section.all(:parentid => nil)
+	@sections = Section.all(:parentid => nil, :order  => [:ordering.asc])
 	erb :home_admin
+end
+
+# admin: section ordering change
+post '/iambirchy/s/ordering' do
+	protected!
+	sections = Section.all()
+	sections.each do |section|
+		key = 'order_' + section.id.to_s
+		section.ordering = params[key]
+		section.save
+	end
+	redirect '/iambirchy'
 end
 
 #admin: section deletion
@@ -150,6 +167,36 @@ post '/iambirchy/i/create' do
     redirect '/iambirchy'
 end
 
+# admin: item ordering change
+post '/iambirchy/s/:sectionname/ordering' do
+	protected!
+	section = Section.first(:name => params[:sectionname])
+	items = Item.all(:sectionid => section.id)
+	items.each do |item|
+		key = 'order_' + item.id.to_s
+		item.ordering = params[key]
+		item.save
+	end
+	redirect '/iambirchy/s/edititems/' + section.id.to_s
+end
+
+# admin: item edit  
+put '/iambirchy/i/?' do
+	protected!
+	item = Item.get(params[:id])
+	item.title = params[:title]
+	item.description = params[:description] 
+	item.sectionid = params[:sectionid]
+	if params[:iconimg] != nil
+		item.iconimg = params[:iconimg]
+	end
+	if params[:expandimg] != nil
+		item.expandimg = params[:expandimg]
+	end
+	item.save
+    redirect '/iambirchy'
+end
+
 # admin: item delete  
 get '/iambirchy/i/delete/:id' do
 	protected!
@@ -162,7 +209,7 @@ end
 get '/iambirchy/s/edititems/:id' do
 	@title = 'Chris Birch : Admin'
 	@section = Section.get(params[:id])
-	@items = Item.all(:sectionid => params[:id])
+	@items = Item.all(:sectionid => params[:id], :order  => [:ordering.asc])
   	erb :section_edititems
 end
 
@@ -170,5 +217,6 @@ end
 get '/iambirchy/i/edit/:id' do
 	@title = 'Chris Birch : Admin'
 	@item = Item.get(params[:id])
+	@sections = Section.all()
   	erb :item_edit
 end

@@ -1,6 +1,9 @@
 <h2 class="sectionHeader"><%= @section.name %></h2>
 <div class="admin">
+<form action="/iambirchy/s/<%= @section.name %>/ordering" method="POST">
 <% @items.each do |item| %>
+<input type="text" name="order_<%= item.id %>" value="<%= item.ordering %>">
 <%= item.title%> <a href="/iambirchy/i/edit/<%= item.id %>">edit</a> <a href="/iambirchy/i/delete/<%= item.id %>">delete</a><br/>
 <% end %>
+<input type="submit" value="Modify ordering">
 </div>

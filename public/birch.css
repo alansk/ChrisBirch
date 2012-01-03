@@ -131,7 +131,7 @@ a.item {
 
 
 .admin{
-	width:200px;
+	width:500px;
 	margin:10px auto 30px auto;
 	display:block;
 	text-shadow: #fff 0px 1px 0px;
@@ -160,5 +160,7 @@ img.expandImg{
 		width:250px;
 	}
 	
-
+	.admin{
+		width:250px;
+	}
 }

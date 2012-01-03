@@ -1,13 +1,14 @@
 <div id="fence">
 <% @items.each do |item| %>
-<a href="" class="item" id="<%= item.id %>"><div class="inner"><%= item.title.upcase %></div></a>
+<a href="/s/<%= @section.name %>/i/<%= item.title %>" class="item" id="<%= item.id %>"><div class="inner"><%= item.title.upcase %></div></a>
 <% end %>
+<div style="padding:400px 0">&nbsp;</div>
 </div>
 
 <script>
 $(document).ready(function()
 {
-
+	//$('html, body').animate({scrollTop:1}, 'fast', function(){});
 	title = new Array();
 	description = new Array();
 	iconImgUrl = new Array();
