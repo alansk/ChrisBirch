@@ -1,14 +1,57 @@
+<div id="back"><a href="/">B<br/>A<br/>C<br/>K</a></div>
 <div id="fence">
 <% @items.each do |item| %>
-<a href="/s/<%= @section.name %>/i/<%= item.title %>" class="item" id="<%= item.id %>"><div class="inner"><%= item.title.upcase %></div></a>
+<span class="item" id="<%= item.id %>"><div class="inner"><%= item.title.upcase %></div></span>
 <% end %>
 <div style="padding:400px 0">&nbsp;</div>
 </div>
 
 <script>
+
+isMobile = function(){
+        return 	((navigator.platform.indexOf("iPhone") != -1) ||
+        		(navigator.platform.indexOf("iPod") != -1) ||
+        		(navigator.platform.indexOf("android") != -1));
+	};
+	
+// PRELOAD IMAGES
+function preload(arrayOfImages){
+	$(arrayOfImages).each(function(){
+		(new Image()).src = this;
+		});
+}
+if(isMobile()==true)
+{
+	preload([
+		<% @items.each do |item| %>
+			'<%= item.expandimg.expand_mobile.url %>',
+		<% end %>
+	]);
+}else
+{
+	preload([
+		<% @items.each do |item| %>
+			'<%= item.expandimg.expand_desk.url %>',
+		<% end %>
+	]);
+}
+
+
 $(document).ready(function()
 {
-	//$('html, body').animate({scrollTop:1}, 'fast', function(){});
+	// SHIFT BACK LINK APPROPRIATELY
+	if(isMobile() == true)
+	{
+		x = 2;
+	}else
+	{
+		windowWidth = $(window).width();
+		contWidth = $("#container").width() + 30;
+		x = (windowWidth - contWidth) /2;
+	}
+	$("#back").css({left: x + "px"});
+	
+	// GATHER UP IMAGES
 	title = new Array();
 	description = new Array();
 	iconImgUrl = new Array();
@@ -26,21 +69,16 @@ $(document).ready(function()
 		$('#<%= item.id %>').children().first().html('&nbsp;');
 	<% end %>
 
-	isMobile = function(){
-        return 	((navigator.platform.indexOf("iPhone") != -1) ||
-        		(navigator.platform.indexOf("iPod") != -1) ||
-        		(navigator.platform.indexOf("android") != -1));
-	};
-
-	expandedWidth = $('#container').css('width').replace('px','') - 10;
-	normalWidth = $('a.item').children().first().css('width').replace('px','');
+	// PREPARE WIDTHS OF NORMAL/EXPANDED ITEMS
+	expandedWidth = $('#container').width()- 10;
+	normalWidth = $('span.item').children().first().width();
 	
 	if(isMobile()==true){
 		expandedWidth = '240';
 		normalWidth = '113';
 	}
 	
-	/*$('a.item').mouseover(function(){
+	/*$('span.item').mouseover(function(){
 		divid = $(this).attr('id');
 		if($(this).css('width').replace('px','') < expandedWidth)
 		{
@@ -48,24 +86,24 @@ $(document).ready(function()
 		}
 	});
 	
-	$('a.item').mouseout(function(){
+	$('span.item').mouseout(function(){
 		if($(this).css('width').replace('px','') < expandedWidth)
 		{
 			$(this).children().first().html('&nbsp');
 		}
 	});*/
 	
-		
-	$('a.item').click(function(){
+	// CLICK HANDLER
+	$('span.item').click(function(){
 		divid = $(this).attr('id');
 		$(this).children().first().css('padding','48px 0 47px 0');
-		if($(this).css('width').replace('px','') >= expandedWidth)
+		if($(this).width() >= expandedWidth)
 		{
 			$(this).children().first().html('&nbsp;');
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
 								$(this).css('background-image','url("' +iconImgUrl[divid]+ '")');
-								$('html, body').animate({scrollTop:$(this).parent().position().top}, 'fast');
+								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
 							});
 			
 		}
@@ -80,10 +118,10 @@ $(document).ready(function()
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
 							$('#'+divid).children().first().css('padding','10px 0 10px 0');
 								$('#'+divid).children().first().html('<div class="innerinner">' + title[divid] + '<br/><br/>' + description[divid] + '</div>');
-								height = $('#'+divid).children().first().children().first().css('height').replace('px','');
+								height = $('#'+divid).children().first().children().first().height();
 								$('#'+divid).children().first().children().first().css('height', '50px');
 								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){
-									$('html, body').animate({scrollTop:$(this).parent().position().top}, 'fast', function(){});
+									$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast', function(){});
 								});
 								
 							

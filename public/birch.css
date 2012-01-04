@@ -22,7 +22,7 @@ a {
 /** Layout **/
 #container {
 	position:relative;
-	top:-5px;
+	top:-10px;
 	background:#222;
 	margin: 0px auto;
 	width:501px;
@@ -38,18 +38,37 @@ a {
 	text-align:left;
 }
 
+#back {
+	position:fixed;
+	top:20px;
+	left:20px;
+	color:#fff;
+}
+
+#back a{
+	color:#999;
+}
+
+#back a:hover{
+	color:#f00;
+}
+
 .title{
 	background: #ddd;
 	background-image:url('clothback.jpg');
 	width:200px;
 	height:50px;
-	padding:30px 10px 15px 10px;
+	padding:150px 10px 15px 10px;
 	margin:0px auto 10px auto;
 	display:block;
 	text-shadow: #fff 0px 1px 0px;
 	-webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
+}
+
+.title a:hover{
+	color:#f00;
 }
 
 .social{
@@ -93,7 +112,7 @@ a.section {
 	font-weight:bold;
 }
 
-a.item {
+span.item {
     -webkit-border-radius: 60px;
     -moz-border-radius: 60px;
     border-radius: 60px;
@@ -106,7 +125,10 @@ a.item {
 	-webkit-box-shadow:1 1 1px #000;
 	-moz-box-shadow:1 1 1px #000;
 	box-shadow:1 1 1px #000;
+	cursor: hand;
+	cursor: pointer;
 }
+
 
 .inner{
 	width: 113px;
@@ -162,5 +184,9 @@ img.expandImg{
 	
 	.admin{
 		width:250px;
+	}
+	
+	.title{
+		padding-top:30px;
 	}
 }
