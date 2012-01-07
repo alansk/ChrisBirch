@@ -48,11 +48,19 @@ class Item
   property :title,       	String
   property :description,    String
   property :sectionid, 		Integer
+  property :url,			String
   property :iconimg, 		String, 		:auto_validation => false
   mount_uploader :iconimg, 	SectionUploader
   property :expandimg, 		String, 		:auto_validation => false
   mount_uploader :expandimg, 	ItemUploader
   property :ordering, Integer
+end
+
+class ItemDetail
+	include DataMapper::Resource 
+	property :id,           	Serial
+  	property :itemid,      		Integer
+  	property :body,				String
 end
 
 DataMapper.auto_upgrade!
@@ -98,7 +106,10 @@ end
 get '/s/:sectionname/i/:title/?' do
 	@section = Section.first(:name_lower => params[:sectionname])
 	@item = Item.first(:sectionid => @section.id, :title_lower => params[:title])
-	#@itemdetail = ItemDetail.first(:itemid => @item.id)
+	@itemdetail = ItemDetail.first(:itemid => @item.id)
+	if @itemdetail == nil and @item.url != nil
+		redirect @item.url
+	end
 	@title = 'Chris Birch : ' + @section.name + ' : ' + @item.title
   	erb :item
 end
@@ -167,6 +178,7 @@ post '/iambirchy/i/create' do
 	item.title_lower = params[:title].downcase
 	item.title = params[:title]
 	item.description = params[:description] 
+	item.url = params[:url]
 	item.sectionid = params[:sectionid]
 	item.iconimg = params[:iconimg]
 	item.expandimg = params[:expandimg]
@@ -193,7 +205,8 @@ put '/iambirchy/i/?' do
 	item = Item.get(params[:id])
 	item.title_lower = params[:title].downcase
 	item.title = params[:title]
-	item.description = params[:description] 
+	item.description = params[:description]
+	item.url = params[:url]
 	item.sectionid = params[:sectionid]
 	if params[:iconimg] != nil
 		item.iconimg = params[:iconimg]
@@ -210,6 +223,36 @@ get '/iambirchy/i/delete/:id' do
 	protected!
 	@item = Item.get(params[:id])
 	@item.destroy
+	redirect '/iambirchy'
+end
+
+# admin: item add detail 
+get '/iambirchy/i/add_detail/:itemid' do
+	protected!
+	erb :item_adddetail
+end
+
+post '/iambirchy/i/add_detail' do
+	protected!
+	itemdetail = ItemDetail.new
+	itemdetail.itemid = params[:itemid]
+	itemdetail.body = params[:body]
+	itemdetail.save
+	redirect '/iambirchy'
+end
+
+# admin: item edit detail  
+get '/iambirchy/i/edit_detail/:itemid' do
+	protected!
+	@itemdetail = ItemDetail.first(:itemid => params[:itemid])
+	erb :item_editdetail
+end
+
+put '/iambirchy/i/edit_detail' do
+	protected!
+	itemdetail = ItemDetail.get(params[:id])
+	itemdetail.body = params[:body]
+	itemdetail.save
 	redirect '/iambirchy'
 end
 

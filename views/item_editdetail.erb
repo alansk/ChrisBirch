@@ -1,0 +1,9 @@
+<div class="admin">
+<form action="/iambirchy/i/edit_detail" method="POST" enctype="multipart/form-data">
+	<input type="hidden" name="_method" value="put">
+	<input type="hidden" name="id" value="<%= @itemdetail.id %>">
+	<input type="hidden" name="itemid" value="<%= @itemdetail.itemid %>">
+  <br/><textarea name="body"><%= @itemdetail.body %></textarea><br/>
+  <br/><br/><input type="submit" value="Edit Detail"/>
+</form>
+</div>

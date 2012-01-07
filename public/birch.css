@@ -201,13 +201,14 @@ a.item_close{
 
 .item_detail, .admin{
 	margin:10px auto 30px auto;
+	text-align:left;
 	display:block;
-	text-shadow: #fff 0px 1px 0px;
-	background:#eee;
-	padding:20px;
-	-webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+	-text-shadow: #fff 0px 1px 0px;
+	background:#e00;
+	padding:20px 40px;
+	-webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    border-radius: 60px;
 }
 
 img.expandImg{
@@ -240,7 +241,7 @@ img.expandImg{
 	    padding:25px;
 	}
 	
-	.item_close{
+	a.item_close{
 		left:100px;
 	}
 }

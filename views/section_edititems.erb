@@ -3,7 +3,12 @@
 <form action="/iambirchy/s/<%= @section.name %>/ordering" method="POST">
 <% @items.each do |item| %>
 <input type="text" name="order_<%= item.id %>" value="<%= item.ordering %>">
-<%= item.title%> <a href="/iambirchy/i/edit/<%= item.id %>">edit</a> <a href="/iambirchy/i/delete/<%= item.id %>">delete</a><br/>
+<%= item.title%> 
+<a href="/iambirchy/i/edit/<%= item.id %>">edit</a> 
+<a href="/iambirchy/i/delete/<%= item.id %>">delete</a>
+<a href="/iambirchy/i/add_detail/<%= item.id %>">add detail</a>
+<a href="/iambirchy/i/edit_detail/<%= item.id %>">edit detail</a>
+<br/>
 <% end %>
 <input type="submit" value="Modify ordering">
 </div>

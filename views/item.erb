@@ -1,5 +1,10 @@
 <div id="back"><a href="/s/<%= @section.name_lower %>">B<br/>A<br/>C<br/>K<br/>&crarr;</a></div>
-<div class="item_detail"><%= @item.title %></div>
+<div class="item_detail">
+<div class="item_title">
+	<%= @item.title %>
+</div>
+	<p><%= @itemdetail.body %></p>
+</div>
 <script>
 $(document).ready(function()
 {
