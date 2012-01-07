@@ -54,7 +54,7 @@ a {
 
 .title{
 	background: #ddd;
-	background-image:url('clothback.jpg');
+	background-image:url('paperback.jpg');
 	width:200px;
 	height:50px;
 	padding:150px 10px 15px 10px;
@@ -76,7 +76,7 @@ a {
 }
 
 .social a{
-	color:#888;
+	color:#666;
 }
 
 .social a:hover{
@@ -189,8 +189,17 @@ span.item {
 
 .item_close{
 	position:relative;
-	top:-14px;
+	top:-15px;
 	left:350px;
+	-webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
+.item_close a{
+	-webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
 }
 
 .item_detail, .admin{
