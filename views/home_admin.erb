@@ -2,7 +2,7 @@
 <form action="/iambirchy/s/ordering" method="POST">
 <% @sections.each do |section| %>
 <input type="text" name="order_<%= section.id %>" value="<%= section.ordering %>">
-<b><%= section.name %></b> 
+<input type="text" name="name_<%= section.id %>" value="<%= section.name %>"> 
 <a href="/iambirchy/s/delete/<%=section.id%>">delete</a> 
 <a href="/iambirchy/i/add/<%=section.id%>">add item</a>
 <a href="/iambirchy/s/edititems/<%=section.id%>">edit items</a>

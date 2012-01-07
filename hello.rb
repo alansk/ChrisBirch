@@ -35,6 +35,7 @@ end
 class Section
   include DataMapper::Resource  
   property :id,           Serial
+  property :name_lower,   String
   property :name,         String
   property :parentid, 	Integer
   property :ordering, Integer
@@ -43,6 +44,7 @@ end
 class Item
   include DataMapper::Resource  
   property :id,           	Serial
+  property :title_lower,    String
   property :title,       	String
   property :description,    String
   property :sectionid, 		Integer
@@ -82,21 +84,22 @@ end
 
 # view a section
 get '/s/:sectionname/?' do
-	@title = 'Chris Birch : ' + params[:sectionname]
-	@section = Section.first(:name => params[:sectionname])
+	@section = Section.first(:name_lower => params[:sectionname])
 	@items = Item.all(:sectionid => @section.id, :order  => [:ordering.asc])
 	if @items.count == 1
 		redirect '/s/' + params[:sectionname] + '/i/' + @items.first.title
 	end
+	
+	@title = 'Chris Birch : ' + @section.name
   	erb :section
 end
 
 # view an item
 get '/s/:sectionname/i/:title/?' do
-	@title = 'Chris Birch : ' + params[:sectionname] + ' : ' + params[:title]
-	@section = Section.first(:name => params[:sectionname])
-	@item = Item.first(:sectionid => @section.id, :title => params[:title])
+	@section = Section.first(:name_lower => params[:sectionname])
+	@item = Item.first(:sectionid => @section.id, :title_lower => params[:title])
 	#@itemdetail = ItemDetail.first(:itemid => @item.id)
+	@title = 'Chris Birch : ' + @section.name + ' : ' + @item.title
   	erb :item
 end
 
@@ -113,8 +116,11 @@ post '/iambirchy/s/ordering' do
 	protected!
 	sections = Section.all()
 	sections.each do |section|
-		key = 'order_' + section.id.to_s
-		section.ordering = params[key]
+		key_order = 'order_' + section.id.to_s
+		key_name = 'name_' + section.id.to_s
+		section.name_lower = params[key_name].downcase 
+		section.name = params[key_name]
+		section.ordering = params[key_order]
 		section.save
 	end
 	redirect '/iambirchy'
@@ -138,7 +144,7 @@ end
 # admin: section create   
 post '/iambirchy/s/create' do
 	protected!
-	section = Section.new(:name => params[:name])
+	section = Section.new(:name_lower => params[:name].downcase, :name => params[:name])
   if section.save
     status 201 
   else
@@ -158,6 +164,7 @@ end
 post '/iambirchy/i/create' do
 	protected!
 	item = Item.new
+	item.title_lower = params[:title].downcase
 	item.title = params[:title]
 	item.description = params[:description] 
 	item.sectionid = params[:sectionid]
@@ -170,7 +177,7 @@ end
 # admin: item ordering change
 post '/iambirchy/s/:sectionname/ordering' do
 	protected!
-	section = Section.first(:name => params[:sectionname])
+	section = Section.first(:name_lower => params[:sectionname])
 	items = Item.all(:sectionid => section.id)
 	items.each do |item|
 		key = 'order_' + item.id.to_s
@@ -184,6 +191,7 @@ end
 put '/iambirchy/i/?' do
 	protected!
 	item = Item.get(params[:id])
+	item.title_lower = params[:title].downcase
 	item.title = params[:title]
 	item.description = params[:description] 
 	item.sectionid = params[:sectionid]

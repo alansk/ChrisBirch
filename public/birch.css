@@ -176,6 +176,9 @@ span.item {
 	background:#000;
 	color:#fff;
 	padding:4px;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .inner_expand a:hover{
@@ -187,16 +190,10 @@ span.item {
 	font-weight:bold;
 }
 
-.item_close{
+a.item_close{
 	position:relative;
 	top:-15px;
 	left:350px;
-	-webkit-border-radius: 0 0 5px 5px;
-    -moz-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
-}
-
-.item_close a{
 	-webkit-border-radius: 0 0 5px 5px;
     -moz-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px;

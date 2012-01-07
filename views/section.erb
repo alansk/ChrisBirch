@@ -117,7 +117,7 @@ $(document).ready(function()
 										'<a href="#" class="item_close">&#10005;</a>' +
 										'<p class="item_title">' + title[divid] + '</p>' +
 										'<p>' + description[divid] + '</p>' +
-										'<br/><p><a href="/s/'+sectionName+'/i/'+title[divid]+'">See More</a><p>'+
+										'<br/><p><a href="/s/'+sectionName.toLowerCase()+'/i/'+title[divid].toLowerCase()+'">See More</a><p>'+
 									'</div>'
 								);
 								height = $('#'+divid).children().first().children().first().height();
