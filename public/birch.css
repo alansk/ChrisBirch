@@ -34,6 +34,7 @@ a {
 }
 
 #fence {
+	margin:10px 0;
 	width:501px;	
 	text-align:left;
 }
@@ -100,15 +101,17 @@ a.section {
 }
 
 .sectionHeader {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
     width: 40px;
     background:#f00;
 	margin:auto;
 	padding:10px;
 	font-size:16px;
 	font-weight:bold;
+	opacity:0.9;
+	filter:alpha(opacity=90);
 }
 
 span.item {
