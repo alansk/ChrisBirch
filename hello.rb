@@ -32,6 +32,24 @@ class ItemUploader < CarrierWave::Uploader::Base
 	storage :file
 end
 
+class DetailUploader < CarrierWave::Uploader::Base
+	include CarrierWave::RMagick
+
+	version :thumb do
+      process :resize_to_fill => [125,125]
+    end
+    
+    version :mobile do
+      process :resize_to_fill => [250,250]
+    end
+    
+    version :desktop do
+      process :resize_to_fill => [500,500]
+    end
+    
+	storage :file
+end
+
 class Section
   include DataMapper::Resource  
   property :id,           Serial
@@ -61,6 +79,14 @@ class ItemDetail
 	property :id,           	Serial
   	property :itemid,      		Integer
   	property :body,				String
+end
+
+class ItemDetailPic
+	include DataMapper::Resource 
+	property :id,           	Serial
+	property :itemid,      		Integer
+	property :pic,				String,		:auto_validation => false
+	mount_uploader :pic, 		DetailUploader
 end
 
 DataMapper.auto_upgrade!

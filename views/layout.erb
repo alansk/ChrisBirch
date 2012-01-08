@@ -30,14 +30,22 @@ function preload(arrayOfImages){
 <h2>CHRIS BIRCH</h2>
 <p>Business Man</p>
 </a>
-<div class="social" style="float:left;text-align:left;"><a href="http://twitter.com/birchface">Twitter</a></div>
-<div class="social" style="float:right;text-align:right;"><a href="http://twitter.com/birchface">Email</a></div>
+<div class="social" style="float:left;text-align:left;"><a href="http://twitter.com/birchface" id="twitter"><img src="/twitter.png"/></a></div>
+<div class="social" style="float:right;text-align:right;"><a href="http://twitter.com/birchface" id="mail"><img src="/mail.png"/></a></div>
 </span>
 
 
 
 <%= yield %>
 </div>
-
+<script>
+$(document).ready(function(){
+	$("#twitter").mouseover(function(){$(this).children().first().attr("src","/twitter_on.png");});
+	$("#twitter").mouseout(function(){$(this).children().first().attr("src","/twitter.png");});
+	
+	$("#mail").mouseover(function(){$(this).children().first().attr("src","/mail_on.png");});
+	$("#mail").mouseout(function(){$(this).children().first().attr("src","/mail.png");});
+});
+</script>
 </body>
 </html>

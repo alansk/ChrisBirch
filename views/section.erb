@@ -26,6 +26,14 @@ if(isMobile()==true)
 	]);
 }
 
+function item() {
+  this.title = '';
+  this.description = '';
+  this.iconImgUrl ='';
+  this.expandDeskImgUrl ='';
+  this.expandMobileImgUrl ='';
+}
+
 
 $(document).ready(function()
 {
@@ -43,18 +51,15 @@ $(document).ready(function()
 	
 	// GATHER UP IMAGES
 	sectionName = '<%= @section.name %>';
-	title = new Array();
-	description = new Array();
-	iconImgUrl = new Array();
-	expandDeskImgUrl = new Array();
-	expandMobileImgUrl = new Array();
+	items = new Array();
 
 	<% @items.each do |item| %>
-		title[<%= item.id %>] = '<%= item.title %>';
-		description[<%= item.id %>] = '<%= item.description %>';
-		iconImgUrl[<%= item.id %>] = '<%= item.iconimg.icon.url %>';
-		expandDeskImgUrl[<%= item.id %>] = '<%= item.expandimg.expand_desk.url %>';
-		expandMobileImgUrl[<%= item.id %>] = '<%= item.expandimg.expand_mobile.url %>';
+		items[<%= item.id %>] = new item();
+		items[<%= item.id %>].title = '<%= item.title %>';
+		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "<br/>") %>';
+		items[<%= item.id %>].iconImgUrl = '<%= item.iconimg.icon.url %>';
+		items[<%= item.id %>].expandDeskImgUrl = '<%= item.expandimg.expand_desk.url %>';
+		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
 		
 		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
@@ -89,10 +94,10 @@ $(document).ready(function()
 			divid = $(this).attr('id');
 			
 			$(this).children().first().css('padding','46px 0 45px 0');
-			$(this).children().first().html('<div class="itemOverHide">'+title[divid]+'</div>');
+			$(this).children().first().html('<div class="itemOverHide">'+items[divid].title+'</div>');
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
-								$(this).css('background-image','url("' +iconImgUrl[divid]+ '")');
+								$(this).css('background-image','url("' +items[divid].iconImgUrl+ '")');
 								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
 							});
         	return false;
@@ -101,14 +106,13 @@ $(document).ready(function()
         	return true;
     	}
 		divid = $(this).attr('id');
-		//$(this).children().first().css('padding','46px 0 45px 0');
 		if($(this).width() < expandedWidth)
 		{
 			divid = $(this).attr('id');
 			if(isMobile()==true){
-				$(this).children().first().css('background-image','url("' +expandMobileImgUrl[divid] + '")');
+				$(this).children().first().css('background-image','url("' +items[divid].expandMobileImgUrl + '")');
 			}else{
-				$(this).children().first().css('background-image','url("' +expandDeskImgUrl[divid] + '")');
+				$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
 			}
 			$(this).css('cursor','auto');
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
@@ -116,9 +120,9 @@ $(document).ready(function()
 								$('#'+divid).children().first().html(
 									'<div class="inner_expand">' +
 										'<a href="#" class="item_close">&#10005;</a>' +
-										'<p class="item_title">' + title[divid] + '</p>' +
-										'<p>' + description[divid] + '</p>' +
-										'<br/><p><a href="/s/'+sectionName.toLowerCase()+'/i/'+title[divid].toLowerCase()+'">See More</a><p>'+
+										'<p class="item_title">' + items[divid].title + '</p>' +
+										'<p>' + items[divid].description + '</p>' +
+										'<br/><p><a class="see_more" href="/s/'+sectionName.toLowerCase()+'/i/'+items[divid].title.toLowerCase()+'">See More</a><p>'+
 									'</div>'
 								);
 								height = $('#'+divid).children().first().children().first().height();
