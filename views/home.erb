@@ -1,5 +1,5 @@
 <% @sections.each do |section| %>
-<a href="/s/<%=section.name_lower%>" class="section"><%= section.name.upcase %></a>
+<span class="item" id="<%= section.name_lower %>"><div class="inner innersection"><a href="/s/<%=section.name_lower%>"><%= section.name.upcase %></a></div></span>
 <% end %>
 
 <script>
@@ -13,26 +13,30 @@ $(document).ready(function()
         		(navigator.platform.indexOf("android") != -1));
 	};
 	
-	setColors = function(){$('a.section').each(function (i) {
+	setColors = function(){$('span.item').each(function (i) {
 		if(i == 0){ $(this).css('backgroundColor','red'); }
 		if(i == 1){ $(this).css('backgroundColor','green'); }
 		if(i == 2){ $(this).css('backgroundColor','blue'); }
 		if(i == 3){ $(this).css('backgroundColor','yellow'); }
-		$(this).css('color',bgColor);
+		if(!isMobile())
+		{
+			$(this).children().first().children().first().css('color',bgColor);
+		}
 	})};
 	
-	$('a.section').mouseover(function(){
+	$('span.item').mouseover(function(){
 		color = $(this).css('backgroundColor');
-		$(this).css('color', color);
+		$(this).children().first().children().first().css('color', color);
 		$(this).css('backgroundColor',bgColor);
 	});
 	
-	$('a.section').mouseout(function(i){
+	$('span.item').mouseout(function(i){
 		setColors();
 	});
 	
-	$('a.section').click(function(i){
+	$('span.item').click(function(i){
 		setColors();
+		window.location.href = '/s/' + $(this).attr("id");
 	});
 	
 	setColors();

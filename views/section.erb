@@ -2,7 +2,11 @@
 <h2 class="sectionHeader"><%= @section.name %></h2>
 <div id="fence">
 <% @items.each do |item| %>
-<span class="item" id="<%= item.id %>"><div class="inner"><div class="itemOver"><%= item.title %></div></div></span>
+<span class="item" id="<%= item.id %>">
+	<div class="inner">
+		<div class="itemOver"><a href="/s/<%= @section.name_lower %>/i/<%= item.title_lower %>"><%= item.title %></a></div>
+	</div>
+</span>
 <% end %>
 </div>
 
@@ -63,6 +67,7 @@ $(document).ready(function()
 		
 		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
+		$('#<%= item.id %>').children().first().children().first().html('<%= item.title %>');
 	<% end %>
 
 	// PREPARE WIDTHS OF NORMAL/EXPANDED ITEMS
