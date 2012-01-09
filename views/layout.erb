@@ -33,7 +33,7 @@ function preload(arrayOfImages){
 <div class="social" style="float:left;text-align:left;"><a href="http://twitter.com/birchface" id="twitter"><img src="/twitter.png"/></a></div>
 <div class="social" style="float:right;text-align:right;"><a href="http://twitter.com/birchface" id="mail"><img src="/mail.png"/></a></div>
 </span>
-
+<div id="contact" class="contact"><div><b>Tel:</b> 07812050848<br/><b>Email:</b> iansboozydo@hotmail.com</div></div>
 
 
 <%= yield %>
@@ -45,6 +45,8 @@ $(document).ready(function(){
 	
 	$("#mail").mouseover(function(){$(this).children().first().attr("src","/mail_on.png");});
 	$("#mail").mouseout(function(){$(this).children().first().attr("src","/mail.png");});
+	
+	$("#mail").click(function(){$("#contact").slideToggle();return false;});
 });
 </script>
 </body>

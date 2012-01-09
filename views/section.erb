@@ -1,5 +1,5 @@
 <div id="back"><a href="/">B<br/>A<br/>C<br/>K<br/>&crarr;</a></div>
-<h2 class="sectionHeader"><%= @section.name %></h2>
+<div class="sectionHeaderCont"><h2 class="sectionHeader"><%= @section.name %></h2></div>
 <div id="fence">
 <% @items.each do |item| %>
 <span class="item" id="<%= item.id %>">
@@ -56,8 +56,12 @@ $(document).ready(function()
 	// GATHER UP IMAGES
 	sectionName = '<%= @section.name %>';
 	items = new Array();
+	itemIds = new Array();
+	itemIdsIndex = 0;
 
 	<% @items.each do |item| %>
+		itemIds[itemIdsIndex] = <%= item.id %>;
+		itemIdsIndex++;
 		items[<%= item.id %>] = new item();
 		items[<%= item.id %>].title = '<%= item.title %>';
 		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "<br/>") %>';
@@ -141,6 +145,18 @@ $(document).ready(function()
 		}
 		return false;
 	});
+	
+	var i=0;
+	var hashitem = location.hash;
+	for (i=0;i<itemIdsIndex;i++)
+	{
+		itemId = itemIds[i];
+		itemTitleLower = '#' + items[itemId].title.toLowerCase()
+		if(hashitem == itemTitleLower)
+		{
+			$('#'+itemId).click();
+		}
+	}
 });
 </script>
 
