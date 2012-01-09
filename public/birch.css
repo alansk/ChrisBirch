@@ -100,7 +100,7 @@ a {
     -moz-border-radius: 8px;
     border-radius: 8px;
 	width:210px;
-	margin:auto;
+	margin:10px auto;
 	text-align:left;
 	padding:5px;
 }
@@ -127,6 +127,10 @@ a {
 	font-size:16px;
 	font-weight:bold;
 	color:#222;
+}
+
+.sectionHeader a:hover{
+	color:#f00;
 }
 
 span.item {

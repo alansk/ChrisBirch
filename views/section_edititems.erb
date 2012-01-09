@@ -1,4 +1,4 @@
-<h2 class="sectionHeader"><%= @section.name %></h2>
+<div class="sectionHeaderCont"><h2 class="sectionHeader"><%= @section.name %></h2></div>
 <div class="admin">
 <form action="/iambirchy/s/<%= @section.name %>/ordering" method="POST">
 <% @items.each do |item| %>
