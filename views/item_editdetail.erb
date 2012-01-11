@@ -4,6 +4,11 @@
 	<input type="hidden" name="id" value="<%= @itemdetail.id %>">
 	<input type="hidden" name="itemid" value="<%= @itemdetail.itemid %>">
   <br/><textarea name="body"><%= @itemdetail.body %></textarea><br/>
+  <br/>Upload an image to use in the detail <br/> 
+  <input type="file" name="detailimg"><br/>
   <br/><br/><input type="submit" value="Edit Detail"/>
 </form>
+<% @detailpics.each do |detailpic| %>
+<%= detailpic.pic.url %> <img src="<%= detailpic.pic.thumb.url %>"/><br/><br/>
+<% end %>
 </div>

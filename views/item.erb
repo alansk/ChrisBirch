@@ -1,9 +1,15 @@
 <div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/s/<%= @section.name_lower %>"><%= @section.name %></a></h2></div>
+
 <div class="item_detail">
-<div class="item_title">
+<div style="text-align:center;">
+<span class="item_title">
 	<%= @item.title %>
+</span>
 </div>
-	<p><%= @itemdetail.body %></p>
+<br/>
+<div>
+<span><%= @itemdetail.body %></span>
+</div>
 </div>
 <script>
 $(document).ready(function()

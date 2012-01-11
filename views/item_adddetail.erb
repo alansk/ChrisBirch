@@ -2,6 +2,8 @@
 <form action="/iambirchy/i/add_detail" method="POST" enctype="multipart/form-data">
   <br/><textarea name="body"></textarea><br/>
   <br/><input type="hidden" name="itemid" value="<%= params[:itemid] %>"><br/>
-  <br/><input type="submit" value="Add Detail"/>
+  <br/>Upload an image to use in the detail <br/> 
+  <input type="file" name="detailimg"><br/>
+  <br/><input type="submit" value="Create Detail"/>
 </form>
 </div>

@@ -36,15 +36,15 @@ class DetailUploader < CarrierWave::Uploader::Base
 	include CarrierWave::RMagick
 
 	version :thumb do
-      process :resize_to_fill => [125,125]
+      process :resize_to_fit => [50,0]
     end
     
     version :mobile do
-      process :resize_to_fill => [250,250]
+      process :resize_to_fit => [250,0]
     end
     
     version :desktop do
-      process :resize_to_fill => [500,500]
+      process :resize_to_fit => [500,0]
     end
     
 	storage :file
@@ -64,7 +64,7 @@ class Item
   property :id,           	Serial
   property :title_lower,    String
   property :title,       	String
-  property :description,    String
+  property :description,    Text
   property :sectionid, 		Integer
   property :url,			String
   property :iconimg, 		String, 		:auto_validation => false
@@ -78,7 +78,7 @@ class ItemDetail
 	include DataMapper::Resource 
 	property :id,           	Serial
   	property :itemid,      		Integer
-  	property :body,				String
+  	property :body,				Text
 end
 
 class ItemDetailPic
@@ -264,13 +264,20 @@ post '/iambirchy/i/add_detail' do
 	itemdetail.itemid = params[:itemid]
 	itemdetail.body = params[:body]
 	itemdetail.save
-	redirect '/iambirchy'
+	if params[:detailimg] != nil
+		detailpic = ItemDetailPic.new
+		detailpic.itemid = itemdetail.itemid
+		detailpic.pic = params[:detailimg]
+		detailpic.save
+	end
+	redirect '/iambirchy/i/edit_detail/' + itemdetail.itemid.to_s
 end
 
 # admin: item edit detail  
 get '/iambirchy/i/edit_detail/:itemid' do
 	protected!
 	@itemdetail = ItemDetail.first(:itemid => params[:itemid])
+	@detailpics = ItemDetailPic.all(:itemid =>params[:itemid])
 	erb :item_editdetail
 end
 
@@ -279,7 +286,13 @@ put '/iambirchy/i/edit_detail' do
 	itemdetail = ItemDetail.get(params[:id])
 	itemdetail.body = params[:body]
 	itemdetail.save
-	redirect '/iambirchy'
+	if params[:detailimg] != nil
+		detailpic = ItemDetailPic.new
+		detailpic.itemid = itemdetail.itemid
+		detailpic.pic = params[:detailimg]
+		detailpic.save
+	end
+	redirect '/iambirchy/i/edit_detail/' + itemdetail.itemid.to_s
 end
 
 # admin: edit items in a section

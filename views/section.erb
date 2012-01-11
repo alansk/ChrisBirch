@@ -64,11 +64,12 @@ $(document).ready(function()
 		itemIdsIndex++;
 		items[<%= item.id %>] = new item();
 		items[<%= item.id %>].title = '<%= item.title %>';
-		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "<br/>") %>';
+		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "") %>';
 		items[<%= item.id %>].iconImgUrl = '<%= item.iconimg.icon.url %>';
 		items[<%= item.id %>].expandDeskImgUrl = '<%= item.expandimg.expand_desk.url %>';
 		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
 		
+		$('#<%= item.id %>').css('background','#222');
 		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
 		$('#<%= item.id %>').children().first().children().first().html('<%= item.title %>');
@@ -129,7 +130,7 @@ $(document).ready(function()
 								$('#'+divid).children().first().html(
 									'<div class="inner_expand">' +
 										'<a href="#" class="item_close">&#10005;</a>' +
-										'<p class="item_title">' + items[divid].title + '</p>' +
+										'<div style="margin-bottom:10px"><span class="item_title">' + items[divid].title + '</span></div>' +
 										'<p>' + items[divid].description + '</p>' +
 										'<br/><p><a class="see_more" href="/s/'+sectionName.toLowerCase()+'/i/'+items[divid].title.toLowerCase()+'">See More</a><p>'+
 									'</div>'
