@@ -13,6 +13,11 @@
 <script>
 	
 // PRELOAD IMAGES
+preload([
+	<% @items.each do |item| %>
+		'<%= item.expandimg.iconimg.icon.url %>',
+	<% end %>
+]);
 
 if(isMobile()==true)
 {
