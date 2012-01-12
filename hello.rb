@@ -121,7 +121,7 @@ get '/s/:sectionname/?' do
 	@section = Section.first(:name_lower => params[:sectionname])
 	@items = Item.all(:sectionid => @section.id, :order  => [:ordering.asc])
 	if @items.count == 1
-		redirect '/s/' + params[:sectionname] + '/i/' + @items.first.title
+		redirect '/s/' + params[:sectionname] + '/i/' + @items.first.title_lower
 	end
 	
 	@title = 'Chris Birch : ' + @section.name

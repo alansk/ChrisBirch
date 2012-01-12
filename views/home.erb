@@ -14,14 +14,11 @@ $(document).ready(function()
 	};
 	
 	setColors = function(){$('span.item').each(function (i) {
-		if(i == 0){ $(this).css('backgroundColor','red'); }
-		if(i == 1){ $(this).css('backgroundColor','green'); }
-		if(i == 2){ $(this).css('backgroundColor','blue'); }
-		if(i == 3){ $(this).css('backgroundColor','yellow'); }
-		if(!isMobile())
-		{
-			$(this).children().first().children().first().css('color',bgColor);
-		}
+		if(i == 0){ $(this).css('backgroundColor','#f00'); }
+		if(i == 1){ $(this).css('backgroundColor','#0f0'); }
+		if(i == 2){ $(this).css('backgroundColor','#00f'); }
+		if(i == 3){ $(this).css('backgroundColor','#ff0'); }
+		$(this).children().first().children().first().css('color','#222');
 	})};
 	
 	$('span.item').mouseover(function(){
@@ -36,6 +33,7 @@ $(document).ready(function()
 	
 	$('span.item').click(function(i){
 		setColors();
+		$(this).children().first().children().first().css('color','#222');
 		window.location.href = '/s/' + $(this).attr("id");
 	});
 	

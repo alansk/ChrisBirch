@@ -109,6 +109,7 @@ $(document).ready(function()
 							'fast', function(){	
 								$(this).css('background-image','url("' +items[divid].iconImgUrl+ '")');
 								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
+								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
 							});
         	return false;
     	}
