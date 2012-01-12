@@ -68,8 +68,8 @@ $(document).ready(function()
 		itemIds[itemIdsIndex] = <%= item.id %>;
 		itemIdsIndex++;
 		items[<%= item.id %>] = new item();
-		items[<%= item.id %>].title = '<%= item.title %>';
-		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "") %>';
+		items[<%= item.id %>].title = '<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>';
+		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "").gsub(/(\')/){|match|"\\"  + match} %>';
 		items[<%= item.id %>].iconImgUrl = '<%= item.iconimg.icon.url %>';
 		items[<%= item.id %>].expandDeskImgUrl = '<%= item.expandimg.expand_desk.url %>';
 		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
@@ -77,7 +77,7 @@ $(document).ready(function()
 		$('#<%= item.id %>').css('background','#222');
 		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
-		$('#<%= item.id %>').children().first().children().first().html('<%= item.title %>');
+		$('#<%= item.id %>').children().first().children().first().html('<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>');
 	<% end %>
 
 	// PREPARE WIDTHS OF NORMAL/EXPANDED ITEMS

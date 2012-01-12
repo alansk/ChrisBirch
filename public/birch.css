@@ -32,6 +32,8 @@ textarea {
 .item_detail p, .inner_expand p {
 	margin:8px 0 8px 0;
 	text-shadow: #f33 0px 1px 0px;
+	color:#000;
+	font-size:14px;
 }
 
 .item_detail p{
@@ -340,7 +342,7 @@ img.expandImg{
 	}
 	
 	.item_detail img{
-		width:170px;
+		width:190px;
 	}
 
 	.item_detail{

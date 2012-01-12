@@ -17,6 +17,9 @@
 </div>
 </div>
 <script>
+//TODO
+//PRELOAD mobile images for mobile, otherwise desktop
+
 $(document).ready(function()
 {
 	// SHIFT BACK LINK APPROPRIATELY
@@ -30,5 +33,13 @@ $(document).ready(function()
 		x = (windowWidth - contWidth) /2;
 	}
 	$("#back").css({left: x + "px"});
+	
+	//TODO
+	// MODIFY IMAGE URLS FOR MOBILE/DESKTOP
+	//$('div.item_detail').children().each(function(){
+		//assume div with class = image and text is the standard url
+		//check for div class = image
+		//replace div text with inserted img tag with appropriate url
+	//	});
 });
 </script>
