@@ -15,7 +15,7 @@
 // PRELOAD IMAGES
 preload([
 	<% @items.each do |item| %>
-		'<%= item.expandimg.iconimg.icon.url %>',
+		'<%= item.iconimg.icon.url %>',
 	<% end %>
 ]);
 
