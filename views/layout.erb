@@ -39,6 +39,9 @@ function preload(arrayOfImages){
 <%= yield %>
 </div>
 <script>
+// PRELOAD IMAGES
+preload(['/twitter_on.png','/mail_on.png']);
+
 $(document).ready(function(){
 	$("#twitter").mouseover(function(){$(this).children().first().attr("src","/twitter_on.png");});
 	$("#twitter").mouseout(function(){$(this).children().first().attr("src","/twitter.png");});
