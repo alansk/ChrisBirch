@@ -75,7 +75,8 @@ $(document).ready(function()
 		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
 		
 		$('#<%= item.id %>').css('background','#222');
-		$('#<%= item.id %>').css('background-image','url("<%= item.iconimg.icon.url %>")');
+		$('#<%= item.id %>').css('background-image','url("<%= item.expandimg.expand_mobile.url %>")');
+		$('#<%= item.id %>').css('background-size','contain');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
 		$('#<%= item.id %>').children().first().children().first().html('<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>');
 	<% end %>
@@ -112,7 +113,8 @@ $(document).ready(function()
 			$(this).children().first().html('<div class="itemOverHide">'+items[divid].title+'</div>');
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
-								$(this).css('background-image','url("' +items[divid].iconImgUrl+ '")');
+								$(this).css('background-image','url("' +items[divid].expandMobileImgUrl+ '")');
+								$(this).css('background-size','contain');
 								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
 								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
 							});
