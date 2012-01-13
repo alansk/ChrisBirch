@@ -49,7 +49,7 @@ $(document).ready(function(){
 	$("#mail").mouseover(function(){$(this).children().first().attr("src","/mail_on.png");});
 	$("#mail").mouseout(function(){$(this).children().first().attr("src","/mail.png");});
 	
-	$("#mail").click(function(){$("#contact").slideToggle();return false;});
+	$("#mail").click(function(){$("#contact").slideToggle();$(this).children().first().attr("src","/mail.png");return false;});
 });
 </script>
 </body>

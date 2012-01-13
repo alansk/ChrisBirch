@@ -1,8 +1,8 @@
 <% if @section.name != @item.title %>
-<div id="back"><a href="/s/<%= @section.name_lower %>">B<br/>A<br/>C<br/>K<br/>&crarr;</a></div>
+<div id="back"><a href="/s/<%= @section.name_lower %>">&nbsp;B&nbsp;<br/>&nbsp;A&nbsp;<br/>&nbsp;C&nbsp;<br/>&nbsp;K&nbsp;<br/>&nbsp;&crarr;&nbsp;</a></div>
 <div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/s/<%= @section.name_lower %>"><%= @section.name %></a></h2></div>
 <% else %>
-<div id="back"><a href="/">B<br/>A<br/>C<br/>K<br/>&crarr;</a></div>
+<div id="back"><a href="/">&nbsp;B&nbsp;<br/>&nbsp;A&nbsp;<br/>&nbsp;C&nbsp;<br/>&nbsp;K&nbsp;<br/>&nbsp;&crarr;&nbsp;</a></div>
 <% end %>
 
 <div class="item_detail">
