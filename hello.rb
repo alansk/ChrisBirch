@@ -201,7 +201,7 @@ end
 post '/iambirchy/i/create' do
 	protected!
 	item = Item.new
-	item.title_lower = params[:title].downcase
+	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
 	item.description = params[:description] 
 	item.url = params[:url]
@@ -229,7 +229,7 @@ end
 put '/iambirchy/i/?' do
 	protected!
 	item = Item.get(params[:id])
-	item.title_lower = params[:title].downcase
+	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
 	item.description = params[:description]
 	item.url = params[:url]

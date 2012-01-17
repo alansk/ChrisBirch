@@ -37,6 +37,7 @@ if(isMobile()==true)
 
 function item() {
   this.title = '';
+  this.title_lower = ''; 
   this.description = '';
   this.iconImgUrl ='';
   this.expandDeskImgUrl ='';
@@ -68,6 +69,7 @@ $(document).ready(function()
 		itemIds[itemIdsIndex] = <%= item.id %>;
 		itemIdsIndex++;
 		items[<%= item.id %>] = new item();
+		items[<%= item.id %>].title_lower = '<%= item.title_lower %>';
 		items[<%= item.id %>].title = '<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>';
 		items[<%= item.id %>].description = '<%= item.description.gsub(/\r\n/, "").gsub(/(\')/){|match|"\\"  + match} %>';
 		items[<%= item.id %>].iconImgUrl = '<%= item.iconimg.icon.url %>';
@@ -75,8 +77,8 @@ $(document).ready(function()
 		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
 		
 		$('#<%= item.id %>').css('background','#222');
-		$('#<%= item.id %>').css('background-image','url("<%= item.expandimg.expand_mobile.url %>")');
-		$('#<%= item.id %>').css('background-size','contain');
+		$('#<%= item.id %>').children().first().css('background-image','url("<%= item.expandimg.expand_mobile.url %>")');
+		$('#<%= item.id %>').children().first().css('background-size','cover');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
 		$('#<%= item.id %>').children().first().children().first().html('<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>');
 	<% end %>
@@ -128,9 +130,10 @@ $(document).ready(function()
 		{
 			divid = $(this).attr('id');
 			if(isMobile()==true){
-				$(this).children().first().css('background-image','url("' +items[divid].expandMobileImgUrl + '")');
+				$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
 			}else{
 				$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
+				$(this).children().first().css('background-size','cover');
 			}
 			$(this).css('cursor','auto');
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
@@ -140,7 +143,7 @@ $(document).ready(function()
 										'<a href="#" class="item_close">&#10005;</a>' +
 										'<div style="margin-bottom:10px"><span class="item_title">' + items[divid].title + '</span></div>' +
 										'<p>' + items[divid].description + '</p>' +
-										'<br/><p><a class="see_more" href="/s/'+sectionName.toLowerCase()+'/i/'+items[divid].title.toLowerCase()+'">See More</a><p>'+
+										'<br/><p><a class="see_more" href="/s/'+sectionName.toLowerCase()+'/i/'+items[divid].title_lower+'">See More</a><p>'+
 									'</div>'
 								);
 								height = $('#'+divid).children().first().children().first().height();
@@ -158,7 +161,7 @@ $(document).ready(function()
 	for (i=0;i<itemIdsIndex;i++)
 	{
 		itemId = itemIds[i];
-		itemTitleLower = '#' + items[itemId].title.toLowerCase()
+		itemTitleLower = '#' + items[itemId].title_lower
 		if(hashitem == itemTitleLower)
 		{
 			$('#'+itemId).click();

@@ -57,7 +57,7 @@ textarea {
 #fence {
 	margin:10px 0;
 	width:501px;	
-	text-align:left;
+	text-align:center;
 }
 
 #back {
@@ -198,8 +198,9 @@ span.item {
 	background:#f00;
 	color:#000;
 	text-align:center;
-	opacity:0.8;
-	filter:alpha(opacity=80);
+	-opacity:0.8;
+	-filter:alpha(opacity=80);
+	text-shadow: #f55 0px 1px 0px;
 	-webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -281,7 +282,6 @@ a.item_close:hover{
 	margin:10px auto 30px auto;
 	text-align:left;
 	display:block;
-	-text-shadow: #fff 0px 1px 0px;
 	background:#e00;
 	padding:40px;
 	-webkit-border-radius: 60px;
