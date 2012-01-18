@@ -15,25 +15,16 @@
 // PRELOAD IMAGES
 preload([
 	<% @items.each do |item| %>
-		'<%= item.iconimg.icon.url %>',
+		'<%= item.expandimg.expand_mobile.url %>',
 	<% end %>
 ]);
 
-if(isMobile()==true)
-{
-	preload([
-		<% @items.each do |item| %>
-			'<%= item.expandimg.expand_mobile.url %>',
-		<% end %>
-	]);
-}else
-{
-	preload([
-		<% @items.each do |item| %>
-			'<%= item.expandimg.expand_desk.url %>',
-		<% end %>
-	]);
-}
+preload([
+	<% @items.each do |item| %>
+		'<%= item.expandimg.expand_desk.url %>',
+	<% end %>
+]);
+
 
 function item() {
   this.title = '';
@@ -116,7 +107,7 @@ $(document).ready(function()
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
 								$(this).css('background-image','url("' +items[divid].expandMobileImgUrl+ '")');
-								$(this).css('background-size','contain');
+								$(this).css('background-size','cover');
 								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
 								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
 							});
@@ -129,12 +120,10 @@ $(document).ready(function()
 		if($(this).width() < expandedWidth)
 		{
 			divid = $(this).attr('id');
-			if(isMobile()==true){
-				$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
-			}else{
-				$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
-				$(this).children().first().css('background-size','cover');
-			}
+			
+			$(this).children().first().css('background-image','url("' +items[divid].expandDeskImgUrl + '")');
+			$(this).children().first().css('background-size','cover');
+		
 			$(this).css('cursor','auto');
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
 							$('#'+divid).children().first().css('padding','10px 0 10px 0');
