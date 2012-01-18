@@ -106,6 +106,7 @@ textarea {
 }
 
 .sectionHeaderCont{
+	background: #aaa;
 	background-image:url('paperback_red.jpg');
 	 -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -116,7 +117,8 @@ textarea {
 
 .contact{
 	display:none;
-	background-image:url('paperback.jpg');
+	background: #ddd;
+	background-image:url('-paperback.jpg');
 	 -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;

@@ -67,7 +67,7 @@ $(document).ready(function()
 		items[<%= item.id %>].expandDeskImgUrl = '<%= item.expandimg.expand_desk.url %>';
 		items[<%= item.id %>].expandMobileImgUrl = '<%= item.expandimg.expand_mobile.url %>';
 		
-		$('#<%= item.id %>').css('background','#222');
+		$('#<%= item.id %>').css('background','#111');
 		$('#<%= item.id %>').children().first().css('background-image','url("<%= item.expandimg.expand_mobile.url %>")');
 		$('#<%= item.id %>').children().first().css('background-size','cover');
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
