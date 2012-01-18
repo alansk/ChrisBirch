@@ -137,6 +137,9 @@ get '/s/:sectionname/i/:title/?' do
 		redirect @item.url
 	end
 	@title = 'Chris Birch : ' + @section.name + ' : ' + @item.title
+	if @section.name == @item.title
+		@title = 'Chris Birch : ' + @section.name
+	end
   	erb :item
 end
 
