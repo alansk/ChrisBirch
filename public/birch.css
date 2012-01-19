@@ -6,6 +6,7 @@
 /** General Style Info **/
 body {
 	background: #222;
+	background-image:url('bgtile.png');
 	color: #222;
 	font-family:helvetica,arial,sans-serif;
 	font-size:12px;
@@ -44,7 +45,7 @@ textarea {
 #container {
 	position:relative;
 	top:-10px;
-	background:#222;
+	-background:#222;
 	margin: 0px auto;
 	width:501px;
 	padding:0px;	
