@@ -181,20 +181,29 @@ span.item {
 	-webkit-border-radius: 60px;
     -moz-border-radius: 60px;
     border-radius: 60px;
-    text-align:left;
+    text-align:center;
 }
 
-.innersection {
+span.innersection {
 	text-align:center;
-	padding:49px 0px 48px 0px;
+	padding:4px;
 	font-weight:bold;
+    white-space:nowrap;
+    display:inline-block;
+    font-size:14px;
+    height:14px;
+    line-height:14px;
 }
 
 .itemOver, .itemOverHide{
-	margin:0px;
-	font-size:10px;
-    padding:4px 0;
+	text-align:center;
+	margin:0;
+	font-size:14px;
+    padding:4px;
     height:14px;
+    line-height:14px;
+    white-space:nowrap;
+    display:inline-block;
 }
 
 .itemOver{
@@ -266,6 +275,7 @@ span.item_title{
 	-webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    white-space:nowrap;
 }
 
 a.item_close{

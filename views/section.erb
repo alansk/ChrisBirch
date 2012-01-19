@@ -4,7 +4,7 @@
 <% @items.each do |item| %>
 <span class="item" id="<%= item.id %>">
 	<div class="inner">
-		<div class="itemOver"><a href="/s/<%= @section.name_lower %>/i/<%= item.title_lower %>"><%= item.title %></a></div>
+		<span class="itemOver"><a href="/s/<%= @section.name_lower %>/i/<%= item.title_lower %>"><%= item.title %></a></span>
 	</div>
 </span>
 <% end %>
@@ -70,6 +70,13 @@ $(document).ready(function()
 		$('#<%= item.id %>').css('background','#111');
 		$('#<%= item.id %>').children().first().css('background-image','url("<%= item.expandimg.expand_mobile.url %>")');
 		$('#<%= item.id %>').children().first().css('background-size','cover');
+		// resize text to fit
+		box = $('#<%= item.id %>').children().first().children().first();
+		size = box.css('font-size').replace('px','');
+		parent = box.parent();
+		while(box.outerWidth() > parent.width()){
+			box.css('font-size', --size + 'px');
+		}
 		$('#<%= item.id %>').children().first().children().first().removeClass().addClass('itemOverHide');
 		$('#<%= item.id %>').children().first().children().first().html('<%= item.title.gsub(/(\')/){|match|"\\"  + match} %>');
 	<% end %>
@@ -106,10 +113,18 @@ $(document).ready(function()
 			$(this).children().first().html('<div class="itemOverHide">'+items[divid].title+'</div>');
 			$(this).children().first().animate({'width': normalWidth +'px'},
 							'fast', function(){	
+								$(this).css('text-align','center');
 								$(this).css('background-image','url("' +items[divid].expandMobileImgUrl+ '")');
 								$(this).css('background-size','cover');
 								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
 								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
+								// resize text to fit
+								box = $(this).children().first();
+								size = box.css('font-size').replace('px','');
+								parent = box.parent();
+								while(box.outerWidth() > parent.width()){
+									box.css('font-size', --size + 'px');
+								}
 							});
         	return false;
     	}
@@ -126,6 +141,7 @@ $(document).ready(function()
 		
 			$(this).css('cursor','auto');
 			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
+							$(this).css('text-align','left');
 							$('#'+divid).children().first().css('padding','10px 0 10px 0');
 								$('#'+divid).children().first().html(
 									'<div class="inner_expand">' +
@@ -140,6 +156,14 @@ $(document).ready(function()
 								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){
 									$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast', function(){});
 								});
+								
+								// resize text to fit
+								box = $(".item_title").first();
+								size = box.css('font-size').replace('px','');
+								parent = box.parent();
+								while(box.outerWidth() > parent.width()){
+									box.css('font-size', --size + 'px');
+								}
 						});
 		}
 		return false;

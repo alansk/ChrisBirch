@@ -1,5 +1,5 @@
 <% @sections.each do |section| %>
-<span class="item" id="<%= section.name_lower %>"><div class="inner innersection"><a href="/s/<%=section.name_lower%>"><%= section.name.upcase %></a></div></span>
+<span class="item" id="<%= section.name_lower %>"><div class="inner"><span class="innersection"><a href="/s/<%=section.name_lower%>"><%= section.name.upcase %></a></span></div></span>
 <% end %>
 
 <script>
@@ -7,23 +7,17 @@ $(document).ready(function()
 {
 	bgColor = $('body').css('backgroundColor');
 	
-	isMobile = function(){
-        return 	((navigator.platform.indexOf("iPhone") != -1) ||
-        		(navigator.platform.indexOf("iPod") != -1) ||
-        		(navigator.platform.indexOf("android") != -1));
-	};
-	
 	setColors = function(){$('span.item').each(function (i) {
 		if(i == 0){ $(this).css('backgroundColor','red'); }
 		if(i == 1){ $(this).css('backgroundColor','green'); }
 		if(i == 2){ $(this).css('backgroundColor','royalblue'); }
 		if(i == 3){ $(this).css('backgroundColor','yellow'); }
-		$(this).children().first().children().first().css('color','#222');
+		$(this).children().first().children().first().children().first().css('color','#222');
 	})};
 	
 	$('span.item').mouseover(function(){
 		color = $(this).css('backgroundColor');
-		$(this).children().first().children().first().css('color', color);
+		$(this).children().first().children().first().children().first().css('color', color);
 		$(this).css('backgroundColor',bgColor);
 	});
 	
@@ -33,10 +27,20 @@ $(document).ready(function()
 	
 	$('span.item').click(function(i){
 		setColors();
-		$(this).children().first().children().first().css('color','#222');
+		$(this).children().first().children().first().children().first().css('color','#222');
 		window.location.href = '/s/' + $(this).attr("id");
 	});
 	
 	setColors();
+	
+	$('span.item').each(function () {
+		// resize text to fit
+		box = $(this).children().first().children().first();
+		size = box.css('font-size').replace('px','');
+		parent = box.parent();
+		while(box.outerWidth() > parent.width()){
+			box.css('font-size', --size + 'px');
+		}
+	});
 
 });</script>
