@@ -72,7 +72,7 @@ $(document).ready(function()
 		$('#<%= item.id %>').children().first().css('background-size','cover');
 		// resize text to fit
 		box = $('#<%= item.id %>').children().first().children().first();
-		size = box.css('font-size').replace('px','');
+		size = 14;box.css('font-size', size + 'px');
 		parent = box.parent();
 		while(box.outerWidth() > parent.width()){
 			box.css('font-size', --size + 'px');
@@ -120,7 +120,7 @@ $(document).ready(function()
 								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
 								// resize text to fit
 								box = $(this).children().first();
-								size = box.css('font-size').replace('px','');
+								size = 14;box.css('font-size', size + 'px');
 								parent = box.parent();
 								while(box.outerWidth() > parent.width()){
 									box.css('font-size', --size + 'px');
