@@ -2,23 +2,45 @@
 <span class="item" id="<%= section.name_lower %>"><div class="inner"><span class="innersection"><a href="/s/<%=section.name_lower%>"><%= section.name.upcase %></a></span></div></span>
 <% end %>
 
+<div id="footer">Design, build and hosting by <a href="http://propercomfy.co.uk">ProperComfy</a></div>
 <script>
 $(document).ready(function()
 {
 	bgColor = $('body').css('backgroundColor');
 	
 	setColors = function(){$('span.item').each(function (i) {
-		if(i == 0){ $(this).css('backgroundColor','red'); }
-		if(i == 1){ $(this).css('backgroundColor','green'); }
-		if(i == 2){ $(this).css('backgroundColor','royalblue'); }
-		if(i == 3){ $(this).css('backgroundColor','yellow'); }
+		if(i == 0){ 
+			$(this).css('backgroundColor','red');  
+			$(this).css('-webkit-box-shadow','0px 0px 10px rgba(255,0,0,0.5)');
+			$(this).css('-moz-box-shadow','0px 0px 10px rgba(255,0,0,0.5)');
+			$(this).css('box-shadow','0px 0px 10px rgba(255,0,0,0.5)');
+		}
+		if(i == 1){ 
+			$(this).css('backgroundColor','green'); 
+			$(this).css('-webkit-box-shadow','0px 0px 10px rgba(0,128,0,0.5)');
+			$(this).css('-moz-box-shadow','0px 0px 10px rgba(0,128,0,0.5)');
+			$(this).css('box-shadow','0px 0px 10px rgba(0,128,0,0.5)');
+		}
+		if(i == 2){ 
+			$(this).css('backgroundColor','royalblue'); 
+			$(this).css('-webkit-box-shadow','0px 0px 10px rgba(65,105,225,0.5)');
+			$(this).css('-moz-box-shadow','0px 0px 10px rgba(65,105,225,0.5)');
+			$(this).css('box-shadow','0px 0px 10px rgba(65,105,225,0.5)');
+		}
+		if(i == 3){ 
+			$(this).css('backgroundColor','yellow'); 
+			$(this).css('-webkit-box-shadow','0px 0px 10px rgba(255,255,0,0.5)');
+			$(this).css('-moz-box-shadow','0px 0px 10px rgba(255,255,0,0.5)');
+			$(this).css('box-shadow','0px 0px 10px rgba(255,255,0,0.5)');
+		}
+		
 		$(this).children().first().children().first().children().first().css('color','#222');
 	})};
 	
 	$('span.item').mouseover(function(){
 		color = $(this).css('backgroundColor');
 		$(this).children().first().children().first().children().first().css('color', color);
-		$(this).css('backgroundColor',bgColor);
+		$(this).css('background','rgba(0,0,0,0)');
 	});
 	
 	$('span.item').mouseout(function(i){
