@@ -63,7 +63,7 @@ textarea {
 
 #back {
 	position:fixed;
-	top:20px;
+	top:260px;
 	left:20px;
 }
 
@@ -318,6 +318,22 @@ img.expandImg{
     border-radius: 8px;
 }
 
+#footer{
+	margin-top:200px;
+	color:#444;
+	font-size:10px;
+	
+	text-shadow: #000 0px 0px 2px;
+}
+
+#footer a{
+	color:#644;
+}
+
+#footer a:hover{
+	color:#844;
+}
+
 @media only screen and (max-device-width:480px) and (min-device-width:320px){
 	#container {
 		margin:auto;
@@ -326,6 +342,10 @@ img.expandImg{
 	
 	#fence {
 		width:250px;
+	}
+	
+	#back {
+		top:140px;
 	}
 	
 	.admin{
