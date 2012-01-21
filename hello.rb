@@ -7,16 +7,6 @@ require 'RMagick'
 
 DataMapper.setup(:default, ENV['DATABASE_URL'])
 
-class SectionUploader < CarrierWave::Uploader::Base
-	include CarrierWave::RMagick
-    
-    version :icon do
-      process :resize_to_fill => [125,125]
-    end
-    
-	storage :file
-end
-
 class ItemUploader < CarrierWave::Uploader::Base
 	include CarrierWave::RMagick
 
@@ -67,8 +57,6 @@ class Item
   property :description,    Text
   property :sectionid, 		Integer
   property :url,			String
-  property :iconimg, 		String, 		:auto_validation => false
-  mount_uploader :iconimg, 	SectionUploader
   property :expandimg, 		String, 		:auto_validation => false
   mount_uploader :expandimg, 	ItemUploader
   property :ordering, Integer
@@ -90,23 +78,6 @@ class ItemDetailPic
 end
 
 DataMapper.auto_upgrade!
-
-#helpers
-helpers do
-
-  def protected!
-    unless authorized?
-      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
-      throw(:halt, [401, "Not authorized\n"])
-    end
-  end
-
-  def authorized?
-    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
-    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', 'flipmode']
-  end
-
-end
 
 
 # home
@@ -145,7 +116,6 @@ end
 
 # admin: home
 get '/iambirchy/?' do
-	protected!
 	@title = 'Chris Birch : Admin'
 	@sections = Section.all(:parentid => nil, :order  => [:ordering.asc])
 	erb :home_admin
@@ -153,7 +123,6 @@ end
 
 # admin: section ordering change
 post '/iambirchy/s/ordering' do
-	protected!
 	sections = Section.all()
 	sections.each do |section|
 		key_order = 'order_' + section.id.to_s
@@ -168,7 +137,6 @@ end
 
 #admin: section deletion
 get '/iambirchy/s/delete/:id' do
-	protected!
 	@section = Section.get(params[:id])
 	@section.destroy
 	redirect '/iambirchy'
@@ -176,14 +144,14 @@ end
 
 # admin: section creation
 get '/iambirchy/s/add' do
-	protected!
+	
 	@title = 'Chris Birch : Admin'
 	erb :section_add
 end
 
 # admin: section create   
 post '/iambirchy/s/create' do
-	protected!
+	
 	section = Section.new(:name_lower => params[:name].downcase, :name => params[:name])
   if section.save
     status 201 
@@ -195,21 +163,20 @@ end
 
 # admin: item creation
 get '/iambirchy/i/add/:sectionid' do
-	protected!
+	
 	@title = 'Chris Birch : Admin'
 	erb :item_add
 end
 
 # admin: item create   
 post '/iambirchy/i/create' do
-	protected!
+	
 	item = Item.new
 	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
 	item.description = params[:description] 
 	item.url = params[:url]
 	item.sectionid = params[:sectionid]
-	item.iconimg = params[:iconimg]
 	item.expandimg = params[:expandimg]
 	item.save
     redirect '/iambirchy'
@@ -217,7 +184,7 @@ end
 
 # admin: item ordering change
 post '/iambirchy/s/:sectionname/ordering' do
-	protected!
+	
 	section = Section.first(:name_lower => params[:sectionname])
 	items = Item.all(:sectionid => section.id)
 	items.each do |item|
@@ -230,16 +197,13 @@ end
 
 # admin: item edit  
 put '/iambirchy/i/?' do
-	protected!
+	
 	item = Item.get(params[:id])
 	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
 	item.description = params[:description]
 	item.url = params[:url]
 	item.sectionid = params[:sectionid]
-	if params[:iconimg] != nil
-		item.iconimg = params[:iconimg]
-	end
 	if params[:expandimg] != nil
 		item.expandimg = params[:expandimg]
 	end
@@ -249,7 +213,7 @@ end
 
 # admin: item delete  
 get '/iambirchy/i/delete/:id' do
-	protected!
+	
 	@item = Item.get(params[:id])
 	@item.destroy
 	redirect '/iambirchy'
@@ -257,12 +221,12 @@ end
 
 # admin: item add detail 
 get '/iambirchy/i/add_detail/:itemid' do
-	protected!
+	
 	erb :item_adddetail
 end
 
 post '/iambirchy/i/add_detail' do
-	protected!
+	
 	itemdetail = ItemDetail.new
 	itemdetail.itemid = params[:itemid]
 	itemdetail.body = params[:body]
@@ -278,14 +242,14 @@ end
 
 # admin: item edit detail  
 get '/iambirchy/i/edit_detail/:itemid' do
-	protected!
+	
 	@itemdetail = ItemDetail.first(:itemid => params[:itemid])
 	@detailpics = ItemDetailPic.all(:itemid =>params[:itemid])
 	erb :item_editdetail
 end
 
 put '/iambirchy/i/edit_detail' do
-	protected!
+	
 	itemdetail = ItemDetail.get(params[:id])
 	itemdetail.body = params[:body]
 	itemdetail.save
