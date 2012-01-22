@@ -42,7 +42,7 @@ textarea {
 	text-indent:0.5em;
 }
 
-.item_detail div{
+.item_detail div div{
 	text-align:center;
 	margin-bottom:10px;
 }
