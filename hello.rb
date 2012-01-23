@@ -262,6 +262,12 @@ put '/iambirchy/i/edit_detail' do
 	redirect '/iambirchy/i/edit_detail/' + itemdetail.itemid.to_s
 end
 
+get '/iambirchy/itemdetailpic/delete/:id' do
+	@pic = ItemDetailPic.get(params[:id])
+	@pic.destroy
+	redirect '/iambirchy/i/edit_detail/' + @pic.itemid.to_s
+end
+
 # admin: edit items in a section
 get '/iambirchy/s/edititems/:id' do
 	@title = 'Chris Birch : Admin'

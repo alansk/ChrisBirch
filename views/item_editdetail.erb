@@ -9,6 +9,6 @@
   <br/><br/><input type="submit" value="Edit Detail"/>
 </form>
 <% @detailpics.each do |detailpic| %>
-<%= detailpic.pic.desktop.url %> <img src="<%= detailpic.pic.thumb.url %>"/><br/><br/>
+<%= detailpic.pic.desktop.url %> <img src="<%= detailpic.pic.thumb.url %>"/> <a href="/iambirchy/itemdetailpic/delete/<%= detailpic.id %>">delete</a><br/><br/>
 <% end %>
 </div>
