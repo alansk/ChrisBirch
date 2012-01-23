@@ -1,4 +1,11 @@
+<div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2></div>
+
 <div class="admin">
+<div class="admin_header">
+<b><a href="/iambirchy/s/edititems/<%= @section.id %>"><%= @section.name %></a> -> <%= @item.title %></b>
+</div>
+
+<div class="admin_item">
 <form action="/iambirchy/i/add_detail" method="POST" enctype="multipart/form-data">
   <br/><textarea name="body"></textarea><br/>
   <br/><input type="hidden" name="itemid" value="<%= params[:itemid] %>"><br/>
@@ -6,4 +13,5 @@
   <input type="file" name="detailimg"><br/>
   <br/><input type="submit" value="Create Detail"/>
 </form>
+</div>
 </div>

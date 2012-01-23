@@ -152,25 +152,23 @@ end
 # admin: section create   
 post '/iambirchy/s/create' do
 	
-	section = Section.new(:name_lower => params[:name].downcase, :name => params[:name])
-  if section.save
-    status 201 
-  else
-    status 412  
-  end
-  redirect '/iambirchy'
+	section = Section.new
+	section.name_lower = params[:name].downcase
+	section.name = params[:name]
+	section.ordering = Section.max(:ordering) + 1
+  	section.save
+  	redirect '/iambirchy'
 end
 
 # admin: item creation
 get '/iambirchy/i/add/:sectionid' do
-	
+	@section = Section.get(params[:sectionid])
 	@title = 'Chris Birch : Admin'
 	erb :item_add
 end
 
 # admin: item create   
 post '/iambirchy/i/create' do
-	
 	item = Item.new
 	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
@@ -178,8 +176,13 @@ post '/iambirchy/i/create' do
 	item.url = params[:url]
 	item.sectionid = params[:sectionid]
 	item.expandimg = params[:expandimg]
+	if Item.max(:ordering, :sectionid => params[:sectionid]) == nil
+		item.ordering = 1
+	else
+		item.ordering = Item.max(:ordering, :sectionid => params[:sectionid]) + 1
+	end
 	item.save
-    redirect '/iambirchy'
+    redirect '/iambirchy/s/edititems/' + params[:sectionid]
 end
 
 # admin: item ordering change
@@ -215,13 +218,15 @@ end
 get '/iambirchy/i/delete/:id' do
 	
 	@item = Item.get(params[:id])
+	sectionId = @item.sectionid
 	@item.destroy
-	redirect '/iambirchy'
+	redirect '/iambirchy/s/edititems/' + sectionId.to_s
 end
 
 # admin: item add detail 
 get '/iambirchy/i/add_detail/:itemid' do
-	
+	@item = Item.get(params[:itemid])
+	@section = Section.get(@item.sectionid)
 	erb :item_adddetail
 end
 
@@ -242,7 +247,8 @@ end
 
 # admin: item edit detail  
 get '/iambirchy/i/edit_detail/:itemid' do
-	
+	@item = Item.get(params[:itemid])
+	@section = Section.get(@item.sectionid)
 	@itemdetail = ItemDetail.first(:itemid => params[:itemid])
 	@detailpics = ItemDetailPic.all(:itemid =>params[:itemid])
 	erb :item_editdetail
@@ -273,6 +279,7 @@ get '/iambirchy/s/edititems/:id' do
 	@title = 'Chris Birch : Admin'
 	@section = Section.get(params[:id])
 	@items = Item.all(:sectionid => params[:id], :order  => [:ordering.asc])
+	@itemDetails = ItemDetail.all
   	erb :section_edititems
 end
 

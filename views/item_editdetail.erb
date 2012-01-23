@@ -1,14 +1,22 @@
+<div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2></div>
+
 <div class="admin">
-<form action="/iambirchy/i/edit_detail" method="POST" enctype="multipart/form-data">
-	<input type="hidden" name="_method" value="put">
-	<input type="hidden" name="id" value="<%= @itemdetail.id %>">
-	<input type="hidden" name="itemid" value="<%= @itemdetail.itemid %>">
-  <br/><textarea name="body"><%= @itemdetail.body %></textarea><br/>
-  <br/>Upload an image to use in the detail <br/> 
-  <input type="file" name="detailimg"><br/>
-  <br/><br/><input type="submit" value="Edit Detail"/>
-</form>
-<% @detailpics.each do |detailpic| %>
-<%= detailpic.pic.desktop.url %> <img src="<%= detailpic.pic.thumb.url %>"/> <a href="/iambirchy/itemdetailpic/delete/<%= detailpic.id %>">delete</a><br/><br/>
-<% end %>
+	<div class="admin_header">
+		<b><a href="/iambirchy/s/edititems/<%= @section.id %>"><%= @section.name %></a> -> <%= @item.title %></b>
+	</div>
+	
+	<div class="admin_item">
+		<form action="/iambirchy/i/edit_detail" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="_method" value="put">
+		<input type="hidden" name="id" value="<%= @itemdetail.id %>">
+		<input type="hidden" name="itemid" value="<%= @itemdetail.itemid %>">
+		<br/><textarea name="body"><%= @itemdetail.body %></textarea><br/>
+		<br/>Upload an image to use in the detail <br/> 
+		<input type="file" name="detailimg"><br/>
+		<br/><br/><input type="submit" value="Edit Detail"/>
+		</form>
+		<% @detailpics.each do |detailpic| %>
+			<%= detailpic.pic.desktop.url %> <img src="<%= detailpic.pic.thumb.url %>"/> <a href="/iambirchy/itemdetailpic/delete/<%= detailpic.id %>">Delete</a><br/><br/>
+		<% end %>
+	</div>
 </div>

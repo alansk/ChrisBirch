@@ -1,10 +1,18 @@
+<div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2></div>
+
 <div class="admin">
-<form action="/iambirchy/i/create" method="POST" enctype="multipart/form-data">
-  <br/>Title<input type="text" name="title"><br/>
-  <br/><textarea name="description">Description</textarea><br/>
-  <br/>URL <input type="text" name="url"><br/>
-  <br/>Expanded image <input type="file" name="expandimg"><br/>
-  <br/><input type="hidden" name="sectionid" value="<%= params[:sectionid] %>"><br/>
-  <br/><input type="submit" value="Add Item"/>
-</form>
+	<div class="admin_header">
+		<b><a href="/iambirchy/s/edititems/<%= @section.id %>"><%= @section.name %></a></b>
+	</div>
+	
+	<div class="admin_item">
+		<form action="/iambirchy/i/create" method="POST" enctype="multipart/form-data">
+		  <br/>Title<input type="text" name="title"><br/>
+		  <br/><textarea name="description">Description</textarea><br/>
+		  <br/>URL <input type="text" name="url"><br/>
+		  <br/>Expanded image <input type="file" name="expandimg"><br/>
+		  <br/><input type="hidden" name="sectionid" value="<%= params[:sectionid] %>"><br/>
+		  <br/><input type="submit" value="Add Item"/>
+		</form>
+	</div>
 </div>

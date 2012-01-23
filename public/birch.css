@@ -307,6 +307,10 @@ a.item_close:hover{
     border-radius: 60px;
 }
 
+.admin{
+	text-align:center;
+}
+
 img.expandImg{
 	width:200px;
 }
@@ -324,6 +328,21 @@ img.expandImg{
     margin-top:10px;
 }
 
+.admin_item, .admin_header
+{
+	background:#e99;
+	-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding:5px;
+    margin:5px;
+}
+
+.admin_header
+{
+	background:#fff;
+}
+	
 #footer{
 	margin-top:200px;
 	color:#666;
