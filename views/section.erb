@@ -104,20 +104,20 @@ $(document).ready(function()
 	expandedWidth = $('#container').width()- 10;
 	normalWidth = $('span.item').children().first().width();
 	
-	if(isMobile()==true){
+	if(isMobile()){
 		expandedWidth = '240';
 		normalWidth = '113';
 	}
 	
 	$('span.item').mouseover(function(){
-		if($(this).width() < expandedWidth && $(this).attr('id').indexOf('extra') == -1)
+		if(!isMobile() && $(this).width() == normalWidth && $(this).attr('id').indexOf('extra') == -1)
 		{
 			$(this).children().first().children().first().removeClass().addClass('itemOver');
 		}
 	});
 	
 	$('span.item').mouseout(function(){
-		if($(this).width() < expandedWidth && $(this).attr('id').indexOf('extra') == -1)
+		if(!isMobile() && $(this).width() == normalWidth && $(this).attr('id').indexOf('extra') == -1)
 		{
 			$(this).children().first().children().first().removeClass().addClass('itemOverHide');
 		}
