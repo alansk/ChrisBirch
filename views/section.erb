@@ -49,6 +49,27 @@ $(document).ready(function()
 	}
 	$("#back").css({left: x + "px"});
 	
+	// ADD EXTRA CIRCLES FOR BALANCE
+	var numberToAdd = 0;
+	if(isMobile())
+	{
+		modulo = <%= @items.count %> % 2;
+		if(modulo != 0)
+			numberToAdd = 2 - modulo;
+	}else
+	{
+		modulo = <%= @items.count %> % 4;
+		if(modulo != 0)
+			numberToAdd = 4 - modulo;
+	}
+	var i;
+	var last = <%= @items.last.id %>;
+	for(i=1;i<=numberToAdd;i++)
+	{
+		$('<span class="item" id="extra'+i+'" style="background:#111;cursor:auto;"><div class="inner"><span class="itemOverHide"></span></div></span>').insertAfter('#' + last);
+		last = 'extra'+i;
+	}
+	
 	// GATHER UP IMAGES
 	sectionName = '<%= @section.name %>';
 	items = new Array();
@@ -89,14 +110,14 @@ $(document).ready(function()
 	}
 	
 	$('span.item').mouseover(function(){
-		if($(this).width() < expandedWidth)
+		if($(this).width() < expandedWidth && $(this).attr('id').indexOf('extra') == -1)
 		{
 			$(this).children().first().children().first().removeClass().addClass('itemOver');
 		}
 	});
 	
 	$('span.item').mouseout(function(){
-		if($(this).width() < expandedWidth)
+		if($(this).width() < expandedWidth && $(this).attr('id').indexOf('extra') == -1)
 		{
 			$(this).children().first().children().first().removeClass().addClass('itemOverHide');
 		}
@@ -110,11 +131,11 @@ $(document).ready(function()
 			$(this).children().first().css('padding','46px 0 45px 0');
 			$(this).children().first().html('<div class="itemOverHide">'+items[divid].title+'</div>');
 			$(this).children().first().animate({'width': normalWidth +'px'},
-							'fast', function(){	
+							'300', function(){	
 								$(this).css('text-align','center');
 								$(this).css('background-image','url("' +items[divid].expandMobileImgUrl+ '")');
 								$(this).css('background-size','cover');
-								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast');
+								$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, '300');
 								$(this).html('<div class="itemOverHide">'+items[divid].title+'</div>');
 								// resize text to fit
 								box = $(this).children().first();
@@ -138,7 +159,7 @@ $(document).ready(function()
 			$(this).children().first().css('background-size','cover');
 		
 			$(this).css('cursor','auto');
-			$(this).children().first().animate({'width': expandedWidth +'px'}, 'fast', function(){
+			$(this).children().first().animate({'width': expandedWidth +'px'}, '300', function(){
 							$(this).css('text-align','left');
 							$('#'+divid).children().first().css('padding','10px 0 10px 0');
 								$('#'+divid).children().first().html(
@@ -151,8 +172,8 @@ $(document).ready(function()
 								);
 								height = $('#'+divid).children().first().children().first().height();
 								$('#'+divid).children().first().children().first().css('height', '50px');
-								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, 'fast', function(){
-									$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, 'fast', function(){});
+								$('#'+divid).children().first().children().first().animate({'height': height + 'px'}, '300', function(){
+									$('html, body').animate({scrollTop:-100+$(this).parent().position().top}, '300', function(){});
 								});
 								
 								// resize text to fit
