@@ -12,8 +12,8 @@
 	<% @items.each do |item| %>
 		<div class="admin_item">
 			<b><%= item.title%></b>
-			<a href="/iambirchy/i/edit/<%= item.id %>">Edit</a> 
-			<a href="/iambirchy/i/delete/<%= item.id %>">Delete</a>
+			<a href="/iambirchy/i/edit/<%= item.id %>">Edit</a> |
+			<a href="/iambirchy/i/delete/<%= item.id %>">Delete</a> |
 			<% if @itemDetails.count(:itemid => item.id) == 0 %>
 				<a href="/iambirchy/i/add_detail/<%= item.id %>">Add Detail</a>
 			<% else %>

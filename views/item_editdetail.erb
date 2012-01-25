@@ -1,3 +1,33 @@
+<script>
+$.fn.extend({
+  insertAtCaret: function(myValue){
+  var obj;
+  if( typeof this[0].name !='undefined' ) obj = this[0];
+  else obj = this;
+
+  if ($.browser.msie) {
+    obj.focus();
+    sel = document.selection.createRange();
+    sel.text = myValue;
+    obj.focus();
+    }
+  else if ($.browser.mozilla || $.browser.webkit) {
+    var startPos = obj.selectionStart;
+    var endPos = obj.selectionEnd;
+    var scrollTop = obj.scrollTop;
+    obj.value = obj.value.substring(0, startPos)+myValue+obj.value.substring(endPos,obj.value.length);
+    obj.focus();
+    obj.selectionStart = startPos + myValue.length;
+    obj.selectionEnd = startPos + myValue.length;
+    obj.scrollTop = scrollTop;
+  } else {
+    obj.value += myValue;
+    obj.focus();
+   }
+ }
+});
+</script>
+
 <div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2></div>
 
 <div class="admin">
@@ -10,13 +40,19 @@
 		<input type="hidden" name="_method" value="put">
 		<input type="hidden" name="id" value="<%= @itemdetail.id %>">
 		<input type="hidden" name="itemid" value="<%= @itemdetail.itemid %>">
-		<br/><textarea name="body"><%= @itemdetail.body %></textarea><br/>
+		<br/><textarea name="body" id="bodytext"><%= @itemdetail.body %></textarea><br/>
 		<br/>Upload an image to use in the detail <br/> 
 		<input type="file" name="detailimg"><br/>
-		<br/><br/><input type="submit" value="Edit Detail"/>
+		<br/><br/><input type="submit" value="Save Changes And/Or Upload Image"/>
 		</form>
+		<br/>
 		<% @detailpics.each do |detailpic| %>
-			<%= detailpic.pic.url %> <img src="<%= detailpic.pic.thumb.url %>"/> <a href="/iambirchy/itemdetailpic/delete/<%= detailpic.id %>">Delete</a><br/><br/>
+			
+			<img src="<%= detailpic.pic.thumb.url %>"/><br/>
+			<a href="javascript:void(0)" onClick="$('#bodytext').insertAtCaret('<div><img src=&quot;<%= detailpic.pic.url %>&quot /></div>');">Insert at cursor</a> |
+			<a href="/iambirchy/itemdetailpic/delete/<%= detailpic.id %>">Delete file from server</a>
+			<br/><br/>
 		<% end %>
 	</div>
 </div>
+
