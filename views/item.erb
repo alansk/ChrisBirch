@@ -13,17 +13,30 @@
 </div>
 <br/>
 <div>
-<span><%= @itemdetail.body %></span>
+<span>
+<script> 
+	// determine whether mobile/desktop - do sub on body where "uploads/" replaced with "uploads/desktop_" or "uploads_mobile" 
+</script>
+<% 
+	body = @itemdetail.body 
+	if @isMobile
+		body = @itemdetail.body.sub('<img src="/uploads/','<img src="/uploads/mobile_')
+	else
+		body = @itemdetail.body.sub('<img src="/uploads/','<img src="/uploads/desktop_')
+	end 
+%>
+<%= body %>
+</span>
 </div>
 </div>
 <script>
 //TODO
-//PRELOAD mobile images for mobile, otherwise desktop
+//PRELOAD full size images
 
 $(document).ready(function()
 {
 	// SHIFT BACK LINK APPROPRIATELY
-	if(isMobile() == true)
+	if(isMobile())
 	{
 		x = 5;
 	}else
@@ -34,12 +47,10 @@ $(document).ready(function()
 	}
 	$("#back").css({left: x + "px"});
 	
-	//TODO
-	// MODIFY IMAGE URLS FOR MOBILE/DESKTOP
-	//$('div.item_detail').children().each(function(){
-		//assume div with class = image and text is the standard url
-		//check for div class = image
-		//replace div text with inserted img tag with appropriate url
-	//	});
+	//popup full image when tap in mobile
+	$('img').click(function(){
+		window.location.href=$(this).attr('src').replace('mobile_', '');
+	});
+
 });
 </script>

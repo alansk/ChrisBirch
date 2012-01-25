@@ -326,6 +326,7 @@ img.expandImg{
     -moz-border-radius: 8px;
     border-radius: 8px;
     margin-top:10px;
+    cursor:pointer;
 }
 
 .admin_item, .admin_header

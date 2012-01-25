@@ -79,6 +79,20 @@ end
 
 DataMapper.auto_upgrade!
 
+def mobUserAgents
+	[
+		/AppleWebKit.*Mobile/,
+		/Android.*AppleWebKit/
+	]
+end
+
+def mobRequest?
+	mobUserAgents.any? {|r| request.env['HTTP_USER_AGENT'] =~ r}
+end
+
+before do
+	@isMobile = mobRequest?
+end
 
 # home
 get '/' do
