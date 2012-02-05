@@ -322,5 +322,6 @@ get '/iambirchy/i/edit/:id' do
 	@title = 'Chris Birch : Admin'
 	@item = Item.get(params[:id])
 	@sections = Section.all()
+	@section = Section.get(@item.sectionid)
   	erb :item_edit
 end

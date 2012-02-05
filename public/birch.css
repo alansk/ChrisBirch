@@ -20,6 +20,22 @@ a {
 	text-decoration:none;
 }
 
+form input{
+	max-width:300px;
+	border: 1px solid #666;
+	padding:2px;
+	margin:2px;
+}
+
+form label{
+	font-weight:bold;
+}
+
+form textarea{
+	max-width:300px;
+	padding:5px;
+}
+
 iframe {
 	width:400px;
 	height:225px;
@@ -377,6 +393,10 @@ img.expandImg{
 	
 	.admin{
 		width:250px;
+		padding:4px 0px;
+		-webkit-border-radius: 10px;
+    	-moz-border-radius: 10px;
+    	border-radius: 10px;
 	}
 	
 	.title{
@@ -415,5 +435,13 @@ img.expandImg{
 	
 	#footer{
 		margin-top:60px;
+	}
+	
+	form input{
+		max-width:200px;
+	}
+	
+	form textarea{
+		max-width:200px;
 	}
 }

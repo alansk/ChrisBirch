@@ -11,7 +11,7 @@
 	<form action="/iambirchy/s/<%= @section.name %>/ordering" method="POST">
 	<% @items.each do |item| %>
 		<div class="admin_item">
-			<b><%= item.title%></b>
+			<b><%= item.title%></b><br/>
 			<a href="/iambirchy/i/edit/<%= item.id %>">Edit</a> |
 			<a href="/iambirchy/i/delete/<%= item.id %>">Delete</a> |
 			<% if @itemDetails.count(:itemid => item.id) == 0 %>
@@ -25,5 +25,5 @@
 		</div>
 	<% end %>
 	<br/>
-	<input type="submit" value="Modify Ordering">
+	<input type="submit" value="Modify Ordering" class="button">
 </div>

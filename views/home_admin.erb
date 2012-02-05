@@ -3,19 +3,25 @@
 <div class="admin">
 	<div class="admin_header">
 		<b>Sections</b>
+	<br/><br/>
+		<a href="/iambirchy/s/add">Add Section</a>
+		
 	</div>
 	
-	<div class="admin_item">
-		<a href="/iambirchy/s/add">Add Section</a>
-		<br/><br/>
 		<form action="/iambirchy/s/ordering" method="POST">
 		<% @sections.each do |section| %>
-			<input type="text" name="order_<%= section.id %>" value="<%= section.ordering %>">
-			<input type="text" name="name_<%= section.id %>" value="<%= section.name %>"> 
-			<a href="/iambirchy/s/delete/<%=section.id%>">Delete</a> 
+			 
+			<div class="admin_item">
+			<div><label>Name</label> <input type="text" name="name_<%= section.id %>" value="<%= section.name %>"></div>
+			<div><label>Display Order</label> <input type="text" name="order_<%= section.id %>" value="<%= section.ordering %>"></div>
+			<div>
+			<a href="/iambirchy/s/delete/<%=section.id%>">Delete</a> |
 			<a href="/iambirchy/s/edititems/<%=section.id%>">Edit Items</a>
-			<br/><br/>
+			</div>
+			</div>
 		<% end %>
-		<input type="submit" value="Modify Ordering">
+		<div class="admin_item">
+		<input type="submit" value="Modify Ordering" class="button">
+	</div>
 	</div>
 </div>
