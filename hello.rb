@@ -97,6 +97,12 @@ class ItemDetailPic
 	mount_uploader :pic, 		DetailUploader
 end
 
+class Contact
+	include DataMapper::Resource 
+	property :id,           	Serial
+  	property :body,				Text
+end
+
 DataMapper.auto_upgrade!
 
 def mobUserAgents
@@ -112,6 +118,12 @@ end
 
 before do
 	@isMobile = mobRequest?
+	@contact = Contact.first()
+	if @contact == nil
+		@contact = Contact.new()
+		@contact.body = 'empty'
+		@contact.save
+	end
 end
 
 # home
@@ -153,6 +165,14 @@ get '/iambirchy/?' do
 	@title = 'Chris Birch : Admin'
 	@sections = Section.all(:parentid => nil, :order  => [:ordering.asc])
 	erb :home_admin
+end
+
+# admin: contact change
+put '/iambirchy/contact' do
+	contact = Contact.first()
+	contact.body = params['body']
+	contact.save
+	redirect '/iambirchy'
 end
 
 # admin: section ordering change

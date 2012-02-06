@@ -1,27 +1,41 @@
-<div class="sectionHeaderCont"><h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2></div>
+<div class="sectionHeaderCont">
+	<h2 class="sectionHeader"><a href="/iambirchy">Admin</a></h2>
+</div>
 
 <div class="admin">
 	<div class="admin_header">
 		<b>Sections</b>
-	<br/><br/>
+		<br/><br/>
 		<a href="/iambirchy/s/add">Add Section</a>
-		
 	</div>
 	
-		<form action="/iambirchy/s/ordering" method="POST">
-		<% @sections.each do |section| %>
-			 
-			<div class="admin_item">
+	<form action="/iambirchy/s/ordering" method="POST">
+	<% @sections.each do |section| %>
+		 
+		<div class="admin_item">
 			<div><label>Name</label> <input type="text" name="name_<%= section.id %>" value="<%= section.name %>"></div>
 			<div><label>Display Order</label> <input type="text" name="order_<%= section.id %>" value="<%= section.ordering %>"></div>
 			<div>
-			<a href="/iambirchy/s/delete/<%=section.id%>">Delete</a> |
-			<a href="/iambirchy/s/edititems/<%=section.id%>">Edit Items</a>
+				<a href="/iambirchy/s/delete/<%=section.id%>">Delete</a> |
+				<a href="/iambirchy/s/edititems/<%=section.id%>">Edit Items</a>
 			</div>
-			</div>
-		<% end %>
-		<div class="admin_item">
-		<input type="submit" value="Modify Ordering" class="button">
+		</div>
+	<% end %>
+	<div class="admin_item">
+		<input type="submit" value="Modify Ordering" class="button"></form>
 	</div>
+	<br/><br/>
+	<div class="admin_header">
+		<b>Contact</b>
+	</div>
+	
+	<div class="admin_item">
+		<form action="/iambirchy/contact" method="POST">
+		<input type="hidden" name="_method" value="put">
+		<div><textarea name="body"><%= @contact.body %></textarea></div>
+	</div>
+	
+	<div class="admin_item">
+		<input type="submit" value="Save Changes" class="button"></form>
 	</div>
 </div>
