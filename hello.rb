@@ -5,6 +5,8 @@ require 'carrierwave'
 require 'carrierwave/datamapper'
 require 'RMagick'
 
+enable :sessions
+
 DataMapper.setup(:default, ENV['DATABASE_URL'])
 
 class ItemUploader < CarrierWave::Uploader::Base
@@ -103,6 +105,12 @@ class Contact
   	property :body,				Text
 end
 
+class Password
+	include DataMapper::Resource 
+	property :id,           	Serial
+  	property :body,				Text
+end
+
 DataMapper.auto_upgrade!
 
 def mobUserAgents
@@ -124,6 +132,17 @@ before do
 		@contact.body = 'empty'
 		@contact.save
 	end
+end
+
+before '/iambirchy*' do
+	password = Password.first()
+	if password == nil
+		password = Password.new()
+		password.body = 'empty'
+		password.save
+	end
+	
+	@loggedin = password.body == session['password']
 end
 
 # home
@@ -162,13 +181,38 @@ end
 
 # admin: home
 get '/iambirchy/?' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@title = 'Chris Birch : Admin'
 	@sections = Section.all(:parentid => nil, :order  => [:ordering.asc])
 	erb :home_admin
 end
 
+# admin: login
+get '/iambirchy/login' do
+	erb :admin_login
+end
+
+# admin: login
+get '/iambirchy/logout' do
+	session['password'] = nil
+	redirect '/iambirchy'
+end
+
+# admin: login
+post '/iambirchy/login' do
+	session['password'] = params['password']
+	redirect '/iambirchy'
+end
+
 # admin: contact change
 put '/iambirchy/contact' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	contact = Contact.first()
 	contact.body = params['body']
 	contact.save
@@ -177,6 +221,10 @@ end
 
 # admin: section ordering change
 post '/iambirchy/s/ordering' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	sections = Section.all()
 	sections.each do |section|
 		key_order = 'order_' + section.id.to_s
@@ -191,6 +239,10 @@ end
 
 #admin: section deletion
 get '/iambirchy/s/delete/:id' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@section = Section.get(params[:id])
 	@section.destroy
 	redirect '/iambirchy'
@@ -198,6 +250,9 @@ end
 
 # admin: section creation
 get '/iambirchy/s/add' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	@title = 'Chris Birch : Admin'
 	erb :section_add
@@ -205,6 +260,9 @@ end
 
 # admin: section create   
 post '/iambirchy/s/create' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	section = Section.new
 	section.name_lower = params[:name].downcase
@@ -216,6 +274,10 @@ end
 
 # admin: item creation
 get '/iambirchy/i/add/:sectionid' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@section = Section.get(params[:sectionid])
 	@title = 'Chris Birch : Admin'
 	erb :item_add
@@ -223,6 +285,10 @@ end
 
 # admin: item create   
 post '/iambirchy/i/create' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	item = Item.new
 	item.title_lower = params[:title].downcase.sub("'", "")
 	item.title = params[:title]
@@ -241,6 +307,10 @@ end
 
 # admin: item ordering change
 post '/iambirchy/s/:sectionname/ordering' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	
 	section = Section.first(:name_lower => params[:sectionname])
 	items = Item.all(:sectionid => section.id)
@@ -254,6 +324,9 @@ end
 
 # admin: item edit  
 put '/iambirchy/i/?' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	item = Item.get(params[:id])
 	item.title_lower = params[:title].downcase.sub("'", "")
@@ -270,6 +343,9 @@ end
 
 # admin: item delete  
 get '/iambirchy/i/delete/:id' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	@item = Item.get(params[:id])
 	sectionId = @item.sectionid
@@ -279,12 +355,19 @@ end
 
 # admin: item add detail 
 get '/iambirchy/i/add_detail/:itemid' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@item = Item.get(params[:itemid])
 	@section = Section.get(@item.sectionid)
 	erb :item_adddetail
 end
 
 post '/iambirchy/i/add_detail' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	itemdetail = ItemDetail.new
 	itemdetail.itemid = params[:itemid]
@@ -301,6 +384,10 @@ end
 
 # admin: item edit detail  
 get '/iambirchy/i/edit_detail/:itemid' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@item = Item.get(params[:itemid])
 	@section = Section.get(@item.sectionid)
 	@itemdetail = ItemDetail.first(:itemid => params[:itemid])
@@ -309,6 +396,9 @@ get '/iambirchy/i/edit_detail/:itemid' do
 end
 
 put '/iambirchy/i/edit_detail' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
 	
 	itemdetail = ItemDetail.get(params[:id])
 	itemdetail.body = params[:body]
@@ -323,6 +413,10 @@ put '/iambirchy/i/edit_detail' do
 end
 
 get '/iambirchy/itemdetailpic/delete/:id' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@pic = ItemDetailPic.get(params[:id])
 	@pic.destroy
 	redirect '/iambirchy/i/edit_detail/' + @pic.itemid.to_s
@@ -330,6 +424,10 @@ end
 
 # admin: edit items in a section
 get '/iambirchy/s/edititems/:id' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@title = 'Chris Birch : Admin'
 	@section = Section.get(params[:id])
 	@items = Item.all(:sectionid => params[:id], :order  => [:ordering.asc])
@@ -339,6 +437,10 @@ end
 
 # admin: edit item
 get '/iambirchy/i/edit/:id' do
+	if !@loggedin
+		redirect '/iambirchy/login'
+	end
+	
 	@title = 'Chris Birch : Admin'
 	@item = Item.get(params[:id])
 	@sections = Section.all()
